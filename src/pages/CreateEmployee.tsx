@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import DatePicker from '../components/DatePicker';
 import { addEmployee } from '../redux/employeeSlice';
 import { Dropdown } from 'react-dropdown-package';
-import { options, Option } from '../data/department';
+import { options as departmentOptions, Option } from '../data/department';
+import { states , OptionState } from '../data/states';
 
 interface Employee {
   firstName: string;
@@ -24,10 +25,9 @@ const CreateEmployee: React.FC = () => {
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [street, setStreet] = useState<string>('');
   const [city, setCity] = useState<string>('');
-  const [state, setState] = useState<string>('');
   const [zipCode, setZipCode] = useState<string>('');
-  const [department, setDepartment] = useState<Option | null>(null);
-  const [selected, setSelected] = useState<Option>({ value: 'Sales', label: 'Sales' });
+  const [selectedDepartment, setSelectedDepartment] = useState<Option>(departmentOptions[0]);
+  const [selectedStates, setSelectedStates] = useState<OptionState>(states[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -39,21 +39,24 @@ const CreateEmployee: React.FC = () => {
       lastName,
       dateOfBirth: dateOfBirth.toLocaleDateString(),
       startDate: startDate.toLocaleDateString(),
-      department: department ? department.value : '',
+      department: selectedDepartment ? selectedDepartment.value : '',
       street,
       city,
-      state,
+      state: selectedStates.name,
       zipCode,
     };
     dispatch(addEmployee(employee));
     alert('Employee Created!');
   };
 
-   const handleSelectedChange = (selected: string) => {
+  const handleSelectedDepartmentChange = (selected: string) => {
     const selectedOption: Option = { value: selected, label: selected };
-    setSelected(selectedOption);
-    setDepartment(selectedOption);
-    setIsDropdownOpen(false); 
+    setSelectedDepartment(selectedOption);
+  };
+
+  const handleSelectedStateChange = (selected: string) => {
+    const selectedOption: OptionState = { name: selected, abbreviation: selected };
+    setSelectedStates(selectedOption);
   };
 
   useEffect(() => {
@@ -129,13 +132,13 @@ const CreateEmployee: React.FC = () => {
           />
 
           <label htmlFor="state">State</label>
-          <select
-            id="state"
-            value={state}
-            onChange={(e) => setState(e.target.value)}
-          >
-            {/* Options à ajouter */}
-          </select>
+          <div className="dropdown_container" onClick={handleDropdownToggle}>
+            <Dropdown
+              options={states.map(state => ({ value: state.abbreviation, label: state.name }))}
+              selected={selectedStates.name}
+              onSelectedChange={handleSelectedStateChange}
+            />
+          </div>
 
           <label htmlFor="zip-code">Zip Code</label>
           <input
@@ -151,7 +154,7 @@ const CreateEmployee: React.FC = () => {
           ref={dropdownRef} 
           className="dropdown_container"
           onClick={handleDropdownToggle}>
-            <Dropdown options={options} selected={selected.value} onSelectedChange={handleSelectedChange} />
+            <Dropdown options={departmentOptions} selected={selectedDepartment.value} onSelectedChange={handleSelectedDepartmentChange} />
         </div>
       </form>
       <button type="button" className="btn_save" onClick={saveEmployee}>Save</button>

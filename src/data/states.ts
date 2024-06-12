@@ -1,4 +1,9 @@
-export const states = [
+export interface OptionState {
+    name: string;
+    abbreviation: string;
+  }
+
+export const states: OptionState[] = [
     {
         "name": "Alabama",
         "abbreviation": "AL"
