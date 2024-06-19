@@ -12,7 +12,7 @@ interface Employee {
   zipCode: string;
 }
 
-interface EmployeeState {
+export interface EmployeeState {
   list: Employee[];
 }
 

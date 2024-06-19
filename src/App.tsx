@@ -1,15 +1,22 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import CreateEmployee from './pages/CreateEmployee';
-import './app.css';
+import EmployeeList from './pages/EmployeeList';
+
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>HRnet</h1>
-      </header>
-      <CreateEmployee />
-    </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <h1>HRnet</h1>
+        </header>
+        <Routes>
+          <Route path="/" element={<CreateEmployee />} />
+          <Route path="/employees" element={<EmployeeList />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

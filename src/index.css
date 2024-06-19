@@ -11,9 +11,25 @@ body {
   min-height: 100vh;
 }
 
+.App {
+  margin: 20px;
+  padding: 40px;
+  background-color:#fff;
+  border-width:1px;
+  border-style:solid;
+  border-bottom-color:#aaa;
+  border-right-color:#aaa;
+  border-top-color:#ddd;
+  border-left-color:#ddd;
+  border-radius:15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+}
+
 header {
   text-align: center;
+  width: 100%;
 }
+
 /* Title Styles */
 .title {
   display: flex;
@@ -36,7 +52,7 @@ header {
   padding: 20px;
   margin-top: 20px;
   width: 100%;
-  max-width: 400px;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,6 +69,10 @@ header {
 }
 
 /* Form Styles */
+.form_container {
+  width: 330px;
+}
+
 form {
   width: 100%;
 }
@@ -140,7 +160,7 @@ button:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 100%;
-  max-width: 800px;
+  box-sizing: border-box; 
   margin-top: 20px;
 }
 
@@ -149,7 +169,7 @@ button:hover {
   margin-bottom: 20px;
 }
 
-#employee-table {
+.table_container {
   width: 100%;
   border-collapse: collapse;
 }
@@ -163,4 +183,20 @@ button:hover {
   background-color: #f2f2f2;
   text-align: left;
   font-weight: bold;
+}
+
+/* table style*/
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
 }

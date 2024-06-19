@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import DatePicker from '../components/DatePicker';
 import { addEmployee } from '../redux/employeeSlice';
@@ -6,7 +7,7 @@ import { Dropdown } from 'react-dropdown-package';
 import { options as departmentOptions, Option } from '../data/department';
 import { states , OptionState } from '../data/states';
 
-interface Employee {
+export interface Employee {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
@@ -73,7 +74,10 @@ const CreateEmployee: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='form_container'>
+      <nav>
+          <Link to="/employees">Employee List</Link>
+      </nav>
       <h2>Create Employee</h2>
       <form id="create-employee">
         <label htmlFor="first-name">First Name</label>

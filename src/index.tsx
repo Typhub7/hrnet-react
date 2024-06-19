@@ -1,15 +1,25 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import exportedStoreObject from './redux/store';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const rootElement = document.getElementById('root');
+
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+
+  root.render(
+    <React.StrictMode>
+      <Provider store={exportedStoreObject.store}>
+        <PersistGate loading={null} persistor={exportedStoreObject.persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+    </React.StrictMode>
+  );
+} else {
+  console.error('Failed to find the root element');
+}
