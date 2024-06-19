@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useTable, useSortBy, Column, TableInstance } from 'react-table';
 import { RootState } from '../redux/store';
 import { Employee } from '../pages/CreateEmployee';
 import './EmployeeTable.css'; // Assurez-vous de créer ce fichier CSS
 
-const EmployeeTable: React.FC = () => {
+interface EmployeeTableProps {
+  filterText: string;
+}
+
+const EmployeeTable: React.FC<EmployeeTableProps> = ({ filterText }) => {
   const employees = useSelector((state: RootState) => state.employees.list);
 
   const columns: Column<Employee>[] = React.useMemo(
@@ -23,7 +27,20 @@ const EmployeeTable: React.FC = () => {
     []
   );
 
-  const data = React.useMemo(() => employees, [employees]);
+  const data = useMemo(() => {
+    if (!filterText.trim()) {
+      return employees;
+    } else {
+      return employees.filter(employee =>
+        Object.values(employee).some(
+          value =>
+            typeof value === 'string' &&
+            value.toLowerCase().includes(filterText.toLowerCase())
+        )
+      );
+    }
+  }, [employees, filterText]);
+
 
   const {
     getTableProps,
@@ -31,7 +48,20 @@ const EmployeeTable: React.FC = () => {
     headerGroups,
     rows,
     prepareRow,
+    setSortBy,
   } = useTable({ columns, data }, useSortBy) as TableInstance<Employee>;
+
+  const handleSortAsc = (column: Column<Employee>) => {
+    if (column.id) {
+      setSortBy([{ id: column.id, desc: false }]);
+    }
+  };
+
+  const handleSortDesc = (column: Column<Employee>) => {
+    if (column.id) {
+      setSortBy([{ id: column.id, desc: true }]);
+    }
+  };
 
   return (
     <table {...getTableProps()}>
@@ -39,7 +69,7 @@ const EmployeeTable: React.FC = () => {
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+              <th {...column.getHeaderProps()}>
                 <div className="arrow_container">
                   {column.render('Header')}
                   <div className="sort-arrows">
@@ -49,6 +79,7 @@ const EmployeeTable: React.FC = () => {
                           ? 'sort-asc'
                           : 'sort-default'
                       }`}
+                      onClick={() => handleSortAsc(column)}
                     >
                       ▲
                     </span>
@@ -58,6 +89,7 @@ const EmployeeTable: React.FC = () => {
                           ? 'sort-desc'
                           : 'sort-default'
                       }`}
+                      onClick={() => handleSortDesc(column)}
                     >
                       ▼
                     </span>

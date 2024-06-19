@@ -2,6 +2,7 @@
 .arrow_container {
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   
 .sort-arrows {
@@ -12,7 +13,7 @@ margin-left: 5px;
 
 /* Styles par défaut pour les flèches de tri */
 .sort-arrow {
-font-size: 10px;
+font-size: 14px;
 color: gray; /* Couleur grise par défaut */
 }
 
