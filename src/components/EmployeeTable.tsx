@@ -3,16 +3,26 @@ import { useSelector } from 'react-redux';
 import { useTable, useSortBy, Column, TableInstance } from 'react-table';
 import { RootState } from '../redux/store';
 import { Employee } from '../pages/CreateEmployee';
-import './EmployeeTable.css'; // Assurez-vous de créer ce fichier CSS
+import './EmployeeTable.css';
 
 interface EmployeeTableProps {
   filterText: string;
+  updateCounts: (filteredCount: number, totalCount: number) => void;
+  entriesPerPage: number;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const EmployeeTable: React.FC<EmployeeTableProps> = ({ filterText }) => {
+const EmployeeTable: React.FC<EmployeeTableProps> = ({
+  filterText,
+  updateCounts,
+  entriesPerPage,
+  currentPage,
+  setCurrentPage,
+}) => {
   const employees = useSelector((state: RootState) => state.employees.list);
 
-  const columns: Column<Employee>[] = React.useMemo(
+  const columns: Column<Employee>[] = useMemo(
     () => [
       { Header: 'First Name', accessor: 'firstName' },
       { Header: 'Last Name', accessor: 'lastName' },
@@ -28,10 +38,9 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ filterText }) => {
   );
 
   const data = useMemo(() => {
-    if (!filterText.trim()) {
-      return employees;
-    } else {
-      return employees.filter(employee =>
+    let filteredData = employees;
+    if (filterText.trim()) {
+      filteredData = employees.filter(employee =>
         Object.values(employee).some(
           value =>
             typeof value === 'string' &&
@@ -39,8 +48,14 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ filterText }) => {
         )
       );
     }
-  }, [employees, filterText]);
+    updateCounts(filteredData.length, employees.length);
+    return filteredData;
+  }, [employees, filterText, updateCounts]);
 
+  const paginatedData = useMemo(() => {
+    const startIndex = (currentPage - 1) * entriesPerPage;
+    return data.slice(startIndex, startIndex + entriesPerPage);
+  }, [data, currentPage, entriesPerPage]);
 
   const {
     getTableProps,
@@ -49,7 +64,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ filterText }) => {
     rows,
     prepareRow,
     setSortBy,
-  } = useTable({ columns, data }, useSortBy) as TableInstance<Employee>;
+  } = useTable({ columns, data: paginatedData }, useSortBy) as TableInstance<Employee>;
 
   const handleSortAsc = (column: Column<Employee>) => {
     if (column.id) {
@@ -63,56 +78,73 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ filterText }) => {
     }
   };
 
+  const pageCount = Math.ceil(data.length / entriesPerPage);
+
+  const handlePreviousPage = () => {
+    setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prevPage => Math.min(prevPage + 1, pageCount));
+  };
+
   return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>
-                <div className="arrow_container">
-                  {column.render('Header')}
-                  <div className="sort-arrows">
-                    <span
-                      className={`sort-arrow ${
-                        column.isSorted && !column.isSortedDesc
-                          ? 'sort-asc'
-                          : 'sort-default'
-                      }`}
-                      onClick={() => handleSortAsc(column)}
-                    >
-                      ▲
-                    </span>
-                    <span
-                      className={`sort-arrow ${
-                        column.isSorted && column.isSortedDesc
-                          ? 'sort-desc'
-                          : 'sort-default'
-                      }`}
-                      onClick={() => handleSortDesc(column)}
-                    >
-                      ▼
-                    </span>
+    <>
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()}>
+                  <div className="arrow_container">
+                    {column.render('Header')}
+                    <div className="sort-arrows">
+                      <span
+                        className={`sort-arrow ${
+                          column.isSorted && !column.isSortedDesc ? 'sort-asc' : 'sort-default'
+                        }`}
+                        onClick={() => handleSortAsc(column)}
+                      >
+                        ▲
+                      </span>
+                      <span
+                        className={`sort-arrow ${
+                          column.isSorted && column.isSortedDesc ? 'sort-desc' : 'sort-default'
+                        }`}
+                        onClick={() => handleSortDesc(column)}
+                      >
+                        ▼
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map(row => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => (
-                <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                </th>
               ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map(row => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => (
+                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <div className="pagination">
+        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        <span className="page-number">{currentPage}</span>
+        <button onClick={handleNextPage} disabled={currentPage === pageCount}>
+          Next
+        </button>
+      </div>
+    </>
   );
 };
 
