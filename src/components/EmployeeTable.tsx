@@ -10,7 +10,6 @@ interface EmployeeTableProps {
   updateCounts: (filteredCount: number, totalCount: number) => void;
   entriesPerPage: number;
   currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const EmployeeTable: React.FC<EmployeeTableProps> = ({
@@ -18,7 +17,6 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
   updateCounts,
   entriesPerPage,
   currentPage,
-  setCurrentPage,
 }) => {
   const employees = useSelector((state: RootState) => state.employees.list);
 
@@ -78,73 +76,52 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
     }
   };
 
-  const pageCount = Math.ceil(data.length / entriesPerPage);
-
-  const handlePreviousPage = () => {
-    setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
-  };
-
-  const handleNextPage = () => {
-    setCurrentPage(prevPage => Math.min(prevPage + 1, pageCount));
-  };
-
   return (
-    <>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>
-                  <div className="arrow_container">
-                    {column.render('Header')}
-                    <div className="sort-arrows">
-                      <span
-                        className={`sort-arrow ${
-                          column.isSorted && !column.isSortedDesc ? 'sort-asc' : 'sort-default'
-                        }`}
-                        onClick={() => handleSortAsc(column)}
-                      >
-                        ▲
-                      </span>
-                      <span
-                        className={`sort-arrow ${
-                          column.isSorted && column.isSortedDesc ? 'sort-desc' : 'sort-default'
-                        }`}
-                        onClick={() => handleSortDesc(column)}
-                      >
-                        ▼
-                      </span>
-                    </div>
+    <table {...getTableProps()}>
+      <thead>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <th {...column.getHeaderProps()}>
+                <div className="arrow_container">
+                  {column.render('Header')}
+                  <div className="sort-arrows">
+                    <span
+                      className={`sort-arrow ${
+                        column.isSorted && !column.isSortedDesc ? 'sort-asc' : 'sort-default'
+                      }`}
+                      onClick={() => handleSortAsc(column)}
+                    >
+                      ▲
+                    </span>
+                    <span
+                      className={`sort-arrow ${
+                        column.isSorted && column.isSortedDesc ? 'sort-desc' : 'sort-default'
+                      }`}
+                      onClick={() => handleSortDesc(column)}
+                    >
+                      ▼
+                    </span>
                   </div>
-                </th>
+                </div>
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map(row => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()}>
+              {row.cells.map(cell => (
+                <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
               ))}
             </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div className="pagination">
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-          Previous
-        </button>
-        <span className="page-number">{currentPage}</span>
-        <button onClick={handleNextPage} disabled={currentPage === pageCount}>
-          Next
-        </button>
-      </div>
-    </>
+          );
+        })}
+      </tbody>
+    </table>
   );
 };
 

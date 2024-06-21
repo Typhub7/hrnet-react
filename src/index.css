@@ -200,3 +200,39 @@ th, td {
 th {
   background-color: #f2f2f2;
 }
+
+/*reset button style*/
+.reset-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.reset-button:hover {
+  background-color: darkred;
+}
+
+/*Test button 100 employees*/
+.test-button {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000; 
+}
+
+.test-button:hover {
+  background-color: darkgreen;
+}

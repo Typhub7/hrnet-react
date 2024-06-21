@@ -26,13 +26,18 @@ const EmployeePage: React.FC = () => {
     setCurrentPage(1); // Reset to the first page when changing entries per page
   };
 
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredCount / entriesPerPage)));
+  };
+
   return (
     <div id="employee-div" className="container">
       <h1>Current Employees</h1>
       <div className="controls-container">
-        <div className="search-container">
-          <SearchInput onSearch={handleSearch} />
-        </div>
         <div className="entries-container">
           <label htmlFor="entries-per-page">Show </label>
           <select id="entries-per-page" value={entriesPerPage} onChange={handleEntriesPerPageChange}>
@@ -43,6 +48,9 @@ const EmployeePage: React.FC = () => {
           </select>
           <span> entries</span>
         </div>
+        <div className="search-container">
+          <SearchInput onSearch={handleSearch} />
+        </div>
       </div>
       
       <div className='table_container'>
@@ -51,15 +59,23 @@ const EmployeePage: React.FC = () => {
           updateCounts={updateCounts}
           entriesPerPage={entriesPerPage}
           currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
         />
       </div>
-      <div className='table_footer'>
-      <TableInfo
-        currentCount={filteredCount}
-        totalCount={totalCount}
-        filtered={filterText.trim() !== ''}
-      />
+      <div className="pagination-info">
+        <TableInfo
+          currentCount={filteredCount}
+          totalCount={totalCount}
+          filtered={filterText.trim() !== ''}
+        />
+        <div className="pagination">
+          <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+            Previous
+          </button>
+          <span className="page-number">{currentPage}</span>
+          <button onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredCount / entriesPerPage)}>
+            Next
+          </button>
+        </div>
       </div>
       <a href="/">Home</a>
     </div>

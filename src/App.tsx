@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import CreateEmployee from './pages/CreateEmployee';
 import EmployeeList from './pages/EmployeeList';
+import ResetButton from './components/ResetButton';
+import TestButton from './components/TestButton';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -17,6 +19,8 @@ const App: React.FC = () => {
         <Route path="/" element={<CreateEmployee />} />
         <Route path="/employees" element={<EmployeeList />} />
       </Routes>
+      <ResetButton />
+      <TestButton />
     </div>
   );
 }
