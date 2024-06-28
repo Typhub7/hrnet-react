@@ -14,7 +14,7 @@ interface CustomModalProps {
   content: React.ReactNode;
 }
 
-const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onRequestClose, content }) => {
+const CustomModal = ({ isOpen, onRequestClose, content }: CustomModalProps) => {
   return (
     <Modal
       isOpen={isOpen}

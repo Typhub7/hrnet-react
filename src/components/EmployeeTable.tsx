@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect  } from 'react';
 import { useSelector } from 'react-redux';
 import { useTable, useSortBy, Column, TableInstance } from 'react-table';
 import { RootState } from '../redux/store';
@@ -12,12 +12,12 @@ interface EmployeeTableProps {
   currentPage: number;
 }
 
-const EmployeeTable: React.FC<EmployeeTableProps> = ({
+const EmployeeTable = ({
   filterText,
   updateCounts,
   entriesPerPage,
   currentPage,
-}) => {
+}: EmployeeTableProps) => {
   const employees = useSelector((state: RootState) => state.employees.list);
 
   const columns: Column<Employee>[] = useMemo(
@@ -46,9 +46,12 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
         )
       );
     }
-    updateCounts(filteredData.length, employees.length);
     return filteredData;
-  }, [employees, filterText, updateCounts]);
+  }, [employees, filterText]);
+
+  useEffect(() => {
+    updateCounts(data.length, employees.length);
+  }, [data.length, employees.length, updateCounts]);
 
   const paginatedData = useMemo(() => {
     const startIndex = (currentPage - 1) * entriesPerPage;

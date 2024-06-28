@@ -7,6 +7,9 @@ import TestButton from './components/TestButton';
 
 const App: React.FC = () => {
   const location = useLocation();
+  // Create env variable that allow to switch the display of 
+  //2 Dev button to add 100 clients to test or to remove then 
+  const showDevButtons = process.env.REACT_APP_SHOW_DEV_BUTTONS === 'true';
 
   return (
     <div className="App">
@@ -19,8 +22,8 @@ const App: React.FC = () => {
         <Route path="/" element={<CreateEmployee />} />
         <Route path="/employees" element={<EmployeeList />} />
       </Routes>
-      <ResetButton />
-      <TestButton />
+      {showDevButtons && <ResetButton />}
+      {showDevButtons && <TestButton />}
     </div>
   );
 }

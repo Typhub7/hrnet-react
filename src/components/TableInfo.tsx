@@ -6,7 +6,7 @@ interface TableInfoProps {
   filtered: boolean;
 }
 
-const TableInfo: React.FC<TableInfoProps> = ({ currentCount, totalCount, filtered }) => {
+const TableInfo = ({ currentCount, totalCount, filtered } : TableInfoProps) => {
   return (
     <div className="table-info">
       {filtered ? (

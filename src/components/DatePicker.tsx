@@ -12,7 +12,7 @@ interface DatePickerComponentProps {
   onChange: (date: Date | null) => void;
 }
 
-const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ selectedDate, onChange }) => {
+const DatePickerComponent = ({ selectedDate, onChange }: DatePickerComponentProps) => {
   return (
     <DatePicker
       selected={selectedDate}
