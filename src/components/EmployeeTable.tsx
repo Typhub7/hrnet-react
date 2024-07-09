@@ -1,9 +1,8 @@
-import React, { useMemo, useEffect  } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTable, useSortBy, Column, TableInstance } from 'react-table';
 import { RootState } from '../redux/store';
 import { Employee } from '../pages/CreateEmployee';
-
 
 interface EmployeeTableProps {
   filterText: string;
@@ -19,6 +18,8 @@ const EmployeeTable = ({
   currentPage,
 }: EmployeeTableProps) => {
   const employees = useSelector((state: RootState) => state.employees.list);
+  
+  const [sortedColumnId, setSortedColumnId] = useState<string | null>(null);
 
   const columns: Column<Employee>[] = useMemo(
     () => [
@@ -70,37 +71,38 @@ const EmployeeTable = ({
   const handleSortAsc = (column: Column<Employee>) => {
     if (column.id) {
       setSortBy([{ id: column.id, desc: false }]);
+      setSortedColumnId(column.id);
     }
   };
 
   const handleSortDesc = (column: Column<Employee>) => {
     if (column.id) {
       setSortBy([{ id: column.id, desc: true }]);
+      setSortedColumnId(column.id);
     }
   };
 
   return (
-    <table  className='w-full border-collapse'{...getTableProps()}>
+    <table className='w-full border-collapse' {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
           <tr className='' {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th className='bg-gray-400' {...column.getHeaderProps()}>
-                <div className="arrow_container flex items-center cursor-pointer justify-between ">
+              <th
+                className={`bg-gray-400 ${sortedColumnId === column.id ? 'bg-slate-400' : ''}`}
+                {...column.getHeaderProps()}
+              >
+                <div className="arrow_container flex items-center cursor-pointer justify-between">
                   {column.render('Header')}
                   <div className="sort-arrows flex flex-col ml-1 text-gray-300">
                     <span
-                      className={`sort-arrow ${
-                        column.isSorted && !column.isSortedDesc ? 'text-black' : 'text-gray-300'
-                      }  text-base`}
+                      className={`sort-arrow ${column.isSorted && !column.isSortedDesc ? 'text-black' : 'text-gray-300'} text-base`}
                       onClick={() => handleSortAsc(column)}
                     >
                       ▲
                     </span>
                     <span
-                      className={`sort-arrow ${
-                        column.isSorted && column.isSortedDesc ? 'text-black' : 'text-gray-300'
-                      } text-base`}
+                      className={`sort-arrow ${column.isSorted && column.isSortedDesc ? 'text-black' : 'text-gray-300'} text-base`}
                       onClick={() => handleSortDesc(column)}
                     >
                       ▼
@@ -118,7 +120,12 @@ const EmployeeTable = ({
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map(cell => (
-                <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                <td
+                  className={sortedColumnId === cell.column.id ? 'bg-slate-300' : ''}
+                  {...cell.getCellProps()}
+                >
+                  {cell.render('Cell')}
+                </td>
               ))}
             </tr>
           );

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import EmployeeTable from '../components/EmployeeTable';
 import SearchInput from '../components/SearchInput';
 import TableInfo from '../components/TableInfo';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 
 const EmployeePage: React.FC = () => {
@@ -36,7 +38,10 @@ const EmployeePage: React.FC = () => {
 
   return (
     <div id="employee-div" className="container bg-white w-full max-w-screen-xl flex flex-col items-center">
-      <h1 className='text-5xl mt-4 text-zinc-500 font-bold'>Current Employees</h1>
+      <h1 className='text-5xl mt-4 text-sky-800 font-bold drop-shadow-lg'>
+        Current Employees
+        <span className='absolute left-1 -bottom-2.5 w-72 h-1.5 bg-gradient-to-r from-sky-900 via-sky-600 to-slate-400 drop-shadow-lg'></span>
+      </h1>
       <div className="flex justify-between items-center mb-5 w-full">
         <div className="flex items-center">
           <label htmlFor="entries-per-page" className='mr-1'>Show </label>
@@ -77,7 +82,13 @@ const EmployeePage: React.FC = () => {
           </button>
         </div>
       </div>
-      <a className="text-center text-blue-700 no-underline mt-3 text-2xl my-5 hover:text-blue-900  hover:scale-110 transition-all duration-300" href="/">Home</a>
+      <a 
+        className="text-center text-sky-800 font-bold drop-shadow-lg no-underline mt-3 text-2xl my-5 hover:text-blue-900 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+        href="/"
+      >
+        <FontAwesomeIcon icon={faHome} className="mr-2" />
+        Home
+      </a>
     </div>
   );
 };

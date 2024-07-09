@@ -7,6 +7,9 @@ import { Dropdown } from 'react-dropdown-package';
 import { options as departmentOptions, Option } from '../data/department';
 import { states, OptionState } from '../data/states';
 import CustomModal from '../components/Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
+
 
 export interface Employee {
   firstName: string;
@@ -77,8 +80,11 @@ const CreateEmployee: React.FC = () => {
 
   return (
     <div className='w-80'>
-      <nav className='text-center text-blue-700 no-underline mt-3 text-xl my-5 hover:text-blue-900 hover:scale-110 transition-all duration-300'>
-        <Link to="/employees">Employee List</Link>
+      <nav className='text-center text-sky-800 font-bold drop-shadow-lg no-underline mt-7 text-xl my-5 hover:text-blue-900 hover:scale-110 transition-all duration-300'>
+        <Link to="/employees" className='flex items-center justify-center'>
+          <FontAwesomeIcon icon={faUsers} className="mr-2" />
+          Employee List
+        </Link>
       </nav>
       <h2 className='text-3xl font-bold text-center text-gray-800 mb-8'>Create Employee</h2>
       <form id="create-employee" className='w-full mb-4'>

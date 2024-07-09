@@ -15,7 +15,10 @@ const App: React.FC = () => {
     <div className="m-5 p-10 bg-white border-1 border-solid border-gray-500 rounded-lg shadow-lg">
       {location.pathname !== '/employees' && (
         <header className="text-center w-full">
-          <h1 className='text-6xl mt-4 text-zinc-500 font-bold'>HRnet</h1>
+          <h1 className='text-6xl mt-4 text-sky-800 font-bold drop-shadow-lg'>
+          HRnet
+          <span className='absolute left-16 -bottom-2.5 w-48 h-1.5 bg-gradient-to-r from-sky-900 via-sky-600 to-slate-400 drop-shadow-lg'></span>
+      </h1>
         </header>
       )}
       <Routes>
