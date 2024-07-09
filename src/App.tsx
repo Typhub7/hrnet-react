@@ -12,18 +12,20 @@ const App: React.FC = () => {
   const showDevButtons = process.env.REACT_APP_SHOW_DEV_BUTTONS === 'true';
 
   return (
-    <div className="App">
+    <div className="m-5 p-10 bg-white border-1 border-solid border-gray-500 rounded-lg shadow-lg">
       {location.pathname !== '/employees' && (
-        <header className="App-header">
-          <h1>HRnet</h1>
+        <header className="text-center w-full">
+          <h1 className='text-6xl mt-4 text-zinc-500 font-bold'>HRnet</h1>
         </header>
       )}
       <Routes>
         <Route path="/" element={<CreateEmployee />} />
         <Route path="/employees" element={<EmployeeList />} />
       </Routes>
-      {showDevButtons && <ResetButton />}
-      {showDevButtons && <TestButton />}
+      <div className='fixed bottom-20 right-5 flex flex-col'>
+        {showDevButtons && <TestButton />}
+        {showDevButtons && <ResetButton />}
+      </div>
     </div>
   );
 }

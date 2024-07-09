@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
  */
 
 interface DatePickerComponentProps {
-  selectedDate: Date;
+  selectedDate: Date | null;
   onChange: (date: Date | null) => void;
 }
 

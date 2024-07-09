@@ -15,7 +15,7 @@ const ResetButton: React.FC = () => {
   };
 
   return (
-    <button className="reset-button" onClick={handleReset}>
+    <button className="px-4 py-3 bg-red-500 text-white rounded-md cursor-pointer z-50 hover:bg-red-700" onClick={handleReset}>
       Reset Data
     </button>
   );

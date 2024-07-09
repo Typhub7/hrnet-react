@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useTable, useSortBy, Column, TableInstance } from 'react-table';
 import { RootState } from '../redux/store';
 import { Employee } from '../pages/CreateEmployee';
-import './EmployeeTable.css';
+
 
 interface EmployeeTableProps {
   filterText: string;
@@ -80,27 +80,27 @@ const EmployeeTable = ({
   };
 
   return (
-    <table {...getTableProps()}>
+    <table  className='w-full border-collapse'{...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <tr className='' {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>
-                <div className="arrow_container">
+              <th className='bg-gray-400' {...column.getHeaderProps()}>
+                <div className="arrow_container flex items-center cursor-pointer justify-between ">
                   {column.render('Header')}
-                  <div className="sort-arrows">
+                  <div className="sort-arrows flex flex-col ml-1 text-gray-300">
                     <span
                       className={`sort-arrow ${
-                        column.isSorted && !column.isSortedDesc ? 'sort-asc' : 'sort-default'
-                      }`}
+                        column.isSorted && !column.isSortedDesc ? 'text-black' : 'text-gray-300'
+                      }  text-base`}
                       onClick={() => handleSortAsc(column)}
                     >
                       ▲
                     </span>
                     <span
                       className={`sort-arrow ${
-                        column.isSorted && column.isSortedDesc ? 'sort-desc' : 'sort-default'
-                      }`}
+                        column.isSorted && column.isSortedDesc ? 'text-black' : 'text-gray-300'
+                      } text-base`}
                       onClick={() => handleSortDesc(column)}
                     >
                       ▼

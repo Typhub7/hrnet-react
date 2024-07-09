@@ -1,3 +1,7 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 /* Global Styles */
 body {
   font-family: Arial, sans-serif;
@@ -9,72 +13,6 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-}
-
-.App {
-  margin: 20px;
-  padding: 40px;
-  background-color:#fff;
-  border-width:1px;
-  border-style:solid;
-  border-bottom-color:#aaa;
-  border-right-color:#aaa;
-  border-top-color:#ddd;
-  border-left-color:#ddd;
-  border-radius:15px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
-}
-
-header {
-  text-align: center;
-  width: 100%;
-}
-
-/* Title Styles */
-.title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  
-}
-
-.title h1 {
-  font-size: 2.5rem;
-  color: #333;
-}
-
-/* Container Styles */
-.container {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-top: 20px;
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.container a {
-  color: #007BFF;
-  text-decoration: none;
-  margin-top: 10px;
-}
-
-.container a:hover {
-  text-decoration: underline;
-}
-
-/* Form Styles */
-.form_container {
-  width: 330px;
-}
-
-form {
-  width: 100%;
 }
 
 label {
@@ -124,16 +62,6 @@ button:hover {
   color: #ffffff;
 }
 
-.btn_save {
-  font-weight: bold;
-  width: 304px;
-  height : 70px;
-  font-size: 18px;
-}
-
-.btn_save:hover {
-  background-color: green;
-}
 
 /* Modal Styles */
 .modal {
@@ -155,13 +83,9 @@ button:hover {
 
 /* Employee List Styles */
 #employee-div {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 100%;
-  box-sizing: border-box; 
-  margin-top: 20px;
+  margin-top: 0px;
+  height: 77.5vh;
 }
 
 #employee-div h1 {
@@ -172,6 +96,8 @@ button:hover {
 .table_container {
   width: 100%;
   border-collapse: collapse;
+  height: 70vh;
+  overflow-y: auto;
 }
 
 #employee-table th, #employee-table td {
@@ -185,11 +111,6 @@ button:hover {
   font-weight: bold;
 }
 
-/* table style*/
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
 
 th, td {
   border: 1px solid black;
@@ -197,42 +118,15 @@ th, td {
   text-align: left;
 }
 
-th {
-  background-color: #f2f2f2;
+a {
+  display: block;
+  margin-top: 20px;
 }
 
-/*reset button style*/
-.reset-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  background-color: red;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1000;
+tbody tr:nth-child(odd) {
+  background-color: #eaeaea;
 }
 
-.reset-button:hover {
-  background-color: darkred;
-}
-
-/*Test button 100 employees*/
-.test-button {
-  position: fixed;
-  bottom: 60px;
-  right: 20px;
-  padding: 10px 20px;
-  background-color: green;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1000; 
-}
-
-.test-button:hover {
-  background-color: darkgreen;
+tbody tr:hover {
+  background-color: #c9d6dd;
 }

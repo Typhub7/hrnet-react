@@ -5,7 +5,8 @@ import DatePicker from '../components/DatePicker';
 import { addEmployee } from '../redux/employeeSlice';
 import { Dropdown } from 'react-dropdown-package';
 import { options as departmentOptions, Option } from '../data/department';
-import { states , OptionState } from '../data/states';
+import { states, OptionState } from '../data/states';
+import CustomModal from '../components/Modal';
 
 export interface Employee {
   firstName: string;
@@ -22,14 +23,15 @@ export interface Employee {
 const CreateEmployee: React.FC = () => {
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
-  const [dateOfBirth, setDateOfBirth] = useState<Date>(new Date());
-  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(null);
   const [street, setStreet] = useState<string>('');
   const [city, setCity] = useState<string>('');
   const [zipCode, setZipCode] = useState<string>('');
   const [selectedDepartment, setSelectedDepartment] = useState<Option>(departmentOptions[0]);
   const [selectedStates, setSelectedStates] = useState<OptionState>(states[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -38,8 +40,8 @@ const CreateEmployee: React.FC = () => {
     const employee: Employee = {
       firstName,
       lastName,
-      dateOfBirth: dateOfBirth.toLocaleDateString(),
-      startDate: startDate.toLocaleDateString(),
+      dateOfBirth: dateOfBirth ? dateOfBirth.toLocaleDateString() : "",
+      startDate: startDate ? startDate.toLocaleDateString() : "",
       department: selectedDepartment ? selectedDepartment.value : '',
       street,
       city,
@@ -47,7 +49,7 @@ const CreateEmployee: React.FC = () => {
       zipCode,
     };
     dispatch(addEmployee(employee));
-    alert('Employee Created!');
+    setIsModalOpen(true);
   };
 
   const handleSelectedDepartmentChange = (selected: string) => {
@@ -74,12 +76,12 @@ const CreateEmployee: React.FC = () => {
   };
 
   return (
-    <div className='form_container'>
-      <nav>
-          <Link to="/employees">Employee List</Link>
+    <div className='w-80'>
+      <nav className='text-center text-blue-700 no-underline mt-3 text-xl my-5 hover:text-blue-900 hover:scale-110 transition-all duration-300'>
+        <Link to="/employees">Employee List</Link>
       </nav>
-      <h2>Create Employee</h2>
-      <form id="create-employee">
+      <h2 className='text-3xl font-bold text-center text-gray-800 mb-8'>Create Employee</h2>
+      <form id="create-employee" className='w-full mb-4'>
         <label htmlFor="first-name">First Name</label>
         <input
           type="text"
@@ -87,7 +89,6 @@ const CreateEmployee: React.FC = () => {
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
         />
-
         <label htmlFor="last-name">Last Name</label>
         <input
           type="text"
@@ -95,30 +96,22 @@ const CreateEmployee: React.FC = () => {
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
-
         <label htmlFor="date-of-birth">Date of Birth</label>
         <DatePicker
           selectedDate={dateOfBirth}
           onChange={(date: Date | null) => {
-            if (date !== null) {
-              setDateOfBirth(date);
-            }
+            setDateOfBirth(date);
           }}
         />
-
         <label htmlFor="start-date">Start Date</label>
         <DatePicker
           selectedDate={startDate}
           onChange={(date: Date | null) => {
-            if (date !== null) {
-              setStartDate(date);
-            }
+            setStartDate(date);
           }}
         />
-
         <fieldset className="address">
           <legend>Address</legend>
-
           <label htmlFor="street">Street</label>
           <input
             type="text"
@@ -126,7 +119,6 @@ const CreateEmployee: React.FC = () => {
             value={street}
             onChange={(e) => setStreet(e.target.value)}
           />
-
           <label htmlFor="city">City</label>
           <input
             type="text"
@@ -134,7 +126,6 @@ const CreateEmployee: React.FC = () => {
             value={city}
             onChange={(e) => setCity(e.target.value)}
           />
-
           <label htmlFor="state">State</label>
           <div className="dropdown_container" onClick={handleDropdownToggle}>
             <Dropdown
@@ -143,7 +134,6 @@ const CreateEmployee: React.FC = () => {
               onSelectedChange={handleSelectedStateChange}
             />
           </div>
-
           <label htmlFor="zip-code">Zip Code</label>
           <input
             type="number"
@@ -152,7 +142,6 @@ const CreateEmployee: React.FC = () => {
             onChange={(e) => setZipCode(e.target.value)}
           />
         </fieldset>
-
         <label htmlFor="department">Department</label>
         <div 
           ref={dropdownRef} 
@@ -161,7 +150,12 @@ const CreateEmployee: React.FC = () => {
             <Dropdown options={departmentOptions} selected={selectedDepartment.value} onSelectedChange={handleSelectedDepartmentChange} />
         </div>
       </form>
-      <button type="button" className="btn_save" onClick={saveEmployee}>Save</button>
+      <button type="button" className="font-bold w-80 h-20 text-lg hover:bg-green-600" onClick={saveEmployee}>Save</button>
+      <CustomModal 
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        content={<p>Employee Created!</p>}
+      />
     </div>
   );
 };
