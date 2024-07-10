@@ -4,6 +4,7 @@ import SearchInput from '../components/SearchInput';
 import TableInfo from '../components/TableInfo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
+import Pagination from '../components/Pagination';
 
 
 const EmployeePage: React.FC = () => {
@@ -28,17 +29,13 @@ const EmployeePage: React.FC = () => {
     setCurrentPage(1); // Reset to the first page when changing entries per page
   };
 
-  const handlePreviousPage = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1));
-  };
-
-  const handleNextPage = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredCount / entriesPerPage)));
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   return (
-    <div id="employee-div" className="container bg-white w-full max-w-screen-xl flex flex-col items-center">
-      <h1 className='text-5xl mt-4 text-sky-800 font-bold drop-shadow-lg'>
+    <div id="employee-div" className="bg-white w-screen max-w-screen-xl flex flex-col items-center">
+      <h1 className='text-5xl text-sky-800 font-bold drop-shadow-lg'>
         Current Employees
         <span className='absolute left-1 -bottom-2.5 w-72 h-1.5 bg-gradient-to-r from-sky-900 via-sky-600 to-slate-400 drop-shadow-lg'></span>
       </h1>
@@ -66,21 +63,18 @@ const EmployeePage: React.FC = () => {
           currentPage={currentPage}
         />
       </div>
-      <div className="pagination-info flex justify-between items-center mt-3 w-full">
+      <div className="pagination-info flex justify-between items-center w-full">
         <TableInfo
           currentCount={filteredCount}
           totalCount={totalCount}
           filtered={filterText.trim() !== ''}
         />
-        <div className="pagination flex items-center">
-          <button className="mr-1" onClick={handlePreviousPage} disabled={currentPage === 1}>
-            Previous
-          </button>
-          <span className="page-number mx-10 my-0">{currentPage}</span>
-          <button onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredCount / entriesPerPage)}>
-            Next
-          </button>
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          filteredCount={filteredCount}
+          entriesPerPage={entriesPerPage}
+          onPageChange={handlePageChange}
+        />
       </div>
       <a 
         className="text-center text-sky-800 font-bold drop-shadow-lg no-underline mt-3 text-2xl my-5 hover:text-blue-900 hover:scale-110 transition-all duration-300 flex items-center justify-center"

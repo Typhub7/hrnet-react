@@ -17,6 +17,9 @@ const DatePickerComponent = ({ selectedDate, onChange }: DatePickerComponentProp
     <DatePicker
       selected={selectedDate}
       onChange={date => onChange(date)}
+      showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
       dateFormat="MM/dd/yyyy"
     />
   );

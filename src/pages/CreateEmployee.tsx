@@ -10,7 +10,6 @@ import CustomModal from '../components/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 
-
 export interface Employee {
   firstName: string;
   lastName: string;
@@ -69,7 +68,7 @@ const CreateEmployee: React.FC = () => {
     if (isDropdownOpen && dropdownRef.current) {
       dropdownRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'nearest',
+        block: 'center',
       });
     }
   }, [isDropdownOpen]);
@@ -138,6 +137,11 @@ const CreateEmployee: React.FC = () => {
               options={states.map(state => ({ value: state.abbreviation, label: state.name }))}
               selected={selectedStates.name}
               onSelectedChange={handleSelectedStateChange}
+              customClasses={{
+                list: "bg-white",
+              }}
+              buttonWidth={304} 
+              listWidth={300}
             />
           </div>
           <label htmlFor="zip-code">Zip Code</label>
@@ -149,15 +153,30 @@ const CreateEmployee: React.FC = () => {
           />
         </fieldset>
         <label htmlFor="department">Department</label>
-        <div 
-          ref={dropdownRef} 
+        <div
+          ref={dropdownRef}
           className="dropdown_container"
           onClick={handleDropdownToggle}>
-            <Dropdown options={departmentOptions} selected={selectedDepartment.value} onSelectedChange={handleSelectedDepartmentChange} />
+          <Dropdown 
+            options={departmentOptions} 
+            selected={selectedDepartment.value} 
+            onSelectedChange={handleSelectedDepartmentChange} 
+            customClasses={{
+              list: "bg-white",
+            }}
+            buttonWidth={304} 
+            listWidth={300}
+          />
         </div>
       </form>
-      <button type="button" className="font-bold w-80 h-20 text-lg hover:bg-green-600" onClick={saveEmployee}>Save</button>
-      <CustomModal 
+      <button 
+        type="button" 
+        className="font-bold w-80 h-20 my-14 text-xl text-white bg-sky-900 hover:bg-sky-600 transition-colors duration-300 ease-in-out" 
+        onClick={saveEmployee}
+        >
+        Save
+        </button>
+      <CustomModal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
         content={<p>Employee Created!</p>}

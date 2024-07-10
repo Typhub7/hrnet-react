@@ -8,18 +8,26 @@ const TestButton: React.FC = () => {
 
   const departments = ['Sales', 'Marketing', 'Engineering', 'Human Resources', 'Legal'];
 
-  const generateFakeEmployee = () => ({
-    firstName: faker.person.firstName(),
+  const formatDate = (date: Date) => {
+    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+  };
+
+  const generateFakeEmployee = () => {
+    const dateOfBirth = faker.date.birthdate({ min: 18, max: 65, mode: 'age' })
+    const startDate = faker.date.recent({ days: 90 });
+
+    return {
+      firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
-    dateOfBirth: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }).toISOString().split('T')[0],
-    startDate: faker.date.recent({ days: 60 }).toISOString().split('T')[0],
-    department: faker.helpers.arrayElement(departments),
+      dateOfBirth: formatDate(dateOfBirth),
+      startDate: formatDate(startDate),
+      department: faker.helpers.arrayElement(departments),
     street: faker.location.streetAddress(),
     city: faker.location.city(),
     state: faker.location.state(),
     zipCode: faker.location.zipCode(),
-  });
-
+    };
+  };
   const handleAddTestEmployees = () => {
     for (let i = 0; i < 100; i++) {
       const fakeEmployee = generateFakeEmployee();
