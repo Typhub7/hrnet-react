@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface SearchInputProps {
   onSearch: (searchTerm: string) => void;
 }
 
-const SearchInput = ({ onSearch } : SearchInputProps) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const SearchInput = ({ onSearch }: SearchInputProps) => {
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);

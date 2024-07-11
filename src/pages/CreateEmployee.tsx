@@ -9,6 +9,15 @@ import { states, OptionState } from '../data/states';
 import CustomModal from '../components/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import {
+  validateFirstName,
+  validateLastName,
+  validateDateOfBirth,
+  validateStartDate,
+  validateStreet,
+  validateCity,
+  validateZipCode
+} from '../validation/validation';
 
 export interface Employee {
   firstName: string;
@@ -35,10 +44,55 @@ const CreateEmployee: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
   const dispatch = useDispatch();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const validateFields = () => {
+    const newErrors: { [key: string]: string } = {};
+    newErrors.firstName = validateFirstName(firstName);
+    newErrors.lastName = validateLastName(lastName);
+    newErrors.dateOfBirth = validateDateOfBirth(dateOfBirth);
+    newErrors.startDate = validateStartDate(startDate);
+    newErrors.street = validateStreet(street);
+    newErrors.city = validateCity(city);
+    newErrors.zipCode = validateZipCode(zipCode);
+    
+    // Filter out empty error messages
+    const filteredErrors = Object.fromEntries(Object.entries(newErrors).filter(([key, value]) => value));
+
+    setErrors(filteredErrors);
+    return Object.keys(filteredErrors).length === 0;
+  };
+
+  const handleFirstNameChange = (value: string) => {
+    setFirstName(value);
+    setErrors({ ...errors, firstName: validateFirstName(value) });
+  };
+
+  const handleLastNameChange = (value: string) => {
+    setLastName(value);
+    setErrors({ ...errors, lastName: validateLastName(value) });
+  };
+
+  const handleStreetChange = (value: string) => {
+    setStreet(value);
+    setErrors({ ...errors, street: validateStreet(value) });
+  };
+
+  const handleCityChange = (value: string) => {
+    setCity(value);
+    setErrors({ ...errors, city: validateCity(value) });
+  };
+
+  const handleZipCodeChange = (value: string) => {
+    setZipCode(value);
+    setErrors({ ...errors, zipCode: validateZipCode(value) });
+  };
+
   const saveEmployee = () => {
+    if (!validateFields()) return;
     const employee: Employee = {
       firstName,
       lastName,
@@ -92,15 +146,19 @@ const CreateEmployee: React.FC = () => {
           type="text"
           id="first-name"
           value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={(e) => handleFirstNameChange(e.target.value)}
         />
+        {errors.firstName && <p className="text-red-500">{errors.firstName}</p>}
+        
         <label htmlFor="last-name">Last Name</label>
         <input
           type="text"
           id="last-name"
           value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
+          onChange={(e) => handleLastNameChange(e.target.value)}
         />
+        {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
+        
         <label htmlFor="date-of-birth">Date of Birth</label>
         <DatePicker
           selectedDate={dateOfBirth}
@@ -108,6 +166,8 @@ const CreateEmployee: React.FC = () => {
             setDateOfBirth(date);
           }}
         />
+        {errors.dateOfBirth && <p className="text-red-500">{errors.dateOfBirth}</p>}
+        
         <label htmlFor="start-date">Start Date</label>
         <DatePicker
           selectedDate={startDate}
@@ -115,6 +175,8 @@ const CreateEmployee: React.FC = () => {
             setStartDate(date);
           }}
         />
+        {errors.startDate && <p className="text-red-500">{errors.startDate}</p>}
+        
         <fieldset className="address">
           <legend>Address</legend>
           <label htmlFor="street">Street</label>
@@ -122,15 +184,19 @@ const CreateEmployee: React.FC = () => {
             type="text"
             id="street"
             value={street}
-            onChange={(e) => setStreet(e.target.value)}
+            onChange={(e) => handleStreetChange(e.target.value)}
           />
+          {errors.street && <p className="text-red-500">{errors.street}</p>}
+          
           <label htmlFor="city">City</label>
           <input
             type="text"
             id="city"
             value={city}
-            onChange={(e) => setCity(e.target.value)}
+            onChange={(e) => handleCityChange(e.target.value)}
           />
+          {errors.city && <p className="text-red-500">{errors.city}</p>}
+          
           <label htmlFor="state">State</label>
           <div className="dropdown_container" onClick={handleDropdownToggle}>
             <Dropdown
@@ -144,13 +210,16 @@ const CreateEmployee: React.FC = () => {
               listWidth={300}
             />
           </div>
+          
           <label htmlFor="zip-code">Zip Code</label>
           <input
-            type="number"
+            type="text"
             id="zip-code"
             value={zipCode}
-            onChange={(e) => setZipCode(e.target.value)}
+            onChange={(e) => handleZipCodeChange(e.target.value)}
           />
+          {errors.zipCode && <p className="text-red-500">{errors.zipCode}</p>}
+          
         </fieldset>
         <label htmlFor="department">Department</label>
         <div
@@ -173,9 +242,9 @@ const CreateEmployee: React.FC = () => {
         type="button" 
         className="font-bold w-80 h-20 my-14 text-xl text-white bg-sky-900 hover:bg-sky-600 transition-colors duration-300 ease-in-out" 
         onClick={saveEmployee}
-        >
+      >
         Save
-        </button>
+      </button>
       <CustomModal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}

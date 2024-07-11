@@ -1,6 +1,6 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 /** Component for rendering a date picker using react-datepicker.
  * @param {DatePickerComponentProps} props - Props for DatePickerComponent component.
@@ -12,11 +12,14 @@ interface DatePickerComponentProps {
   onChange: (date: Date | null) => void;
 }
 
-const DatePickerComponent = ({ selectedDate, onChange }: DatePickerComponentProps) => {
+const DatePickerComponent = ({
+  selectedDate,
+  onChange,
+}: DatePickerComponentProps) => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={date => onChange(date)}
+      onChange={(date) => onChange(date)}
       showMonthDropdown
       showYearDropdown
       dropdownMode="select"

@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import EmployeeTable from '../components/EmployeeTable';
-import SearchInput from '../components/SearchInput';
-import TableInfo from '../components/TableInfo';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import Pagination from '../components/Pagination';
-
+import React, { useState } from "react";
+import EmployeeTable from "../components/EmployeeTable";
+import SearchInput from "../components/SearchInput";
+import TableInfo from "../components/TableInfo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import Pagination from "../components/Pagination";
 
 const EmployeePage: React.FC = () => {
-  const [filterText, setFilterText] = useState('');
+  const [filterText, setFilterText] = useState("");
   const [filteredCount, setFilteredCount] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
@@ -24,7 +23,9 @@ const EmployeePage: React.FC = () => {
     setTotalCount(total);
   };
 
-  const handleEntriesPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleEntriesPerPageChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setEntriesPerPage(Number(e.target.value));
     setCurrentPage(1); // Reset to the first page when changing entries per page
   };
@@ -34,15 +35,25 @@ const EmployeePage: React.FC = () => {
   };
 
   return (
-    <div id="employee-div" className="bg-white w-screen max-w-screen-xl flex flex-col items-center">
-      <h1 className='text-5xl text-sky-800 font-bold drop-shadow-lg'>
+    <div
+      id="employee-div"
+      className="bg-white w-screen max-w-screen-xl flex flex-col items-center"
+    >
+      <h1 className="text-5xl text-sky-800 font-bold drop-shadow-lg">
         Current Employees
-        <span className='absolute left-1 -bottom-2.5 w-72 h-1.5 bg-gradient-to-r from-sky-900 via-sky-600 to-slate-400 drop-shadow-lg'></span>
+        <span className="absolute left-1 -bottom-2.5 w-72 h-1.5 bg-gradient-to-r from-sky-900 via-sky-600 to-slate-400 drop-shadow-lg"></span>
       </h1>
       <div className="flex justify-between items-center mb-5 w-full">
         <div className="flex items-center">
-          <label htmlFor="entries-per-page" className='mr-1'>Show </label>
-          <select id="entries-per-page" className='mx-2 mt-3' value={entriesPerPage} onChange={handleEntriesPerPageChange}>
+          <label htmlFor="entries-per-page" className="mr-1">
+            Show{" "}
+          </label>
+          <select
+            id="entries-per-page"
+            className="mx-2 mt-3"
+            value={entriesPerPage}
+            onChange={handleEntriesPerPageChange}
+          >
             <option value={10}>10</option>
             <option value={25}>25</option>
             <option value={50}>50</option>
@@ -54,8 +65,8 @@ const EmployeePage: React.FC = () => {
           <SearchInput onSearch={handleSearch} />
         </div>
       </div>
-      
-      <div className='table_container mb-5 w-full'>
+
+      <div className="table_container mb-5 w-full">
         <EmployeeTable
           filterText={filterText}
           updateCounts={updateCounts}
@@ -67,7 +78,7 @@ const EmployeePage: React.FC = () => {
         <TableInfo
           currentCount={filteredCount}
           totalCount={totalCount}
-          filtered={filterText.trim() !== ''}
+          filtered={filterText.trim() !== ""}
         />
         <Pagination
           currentPage={currentPage}
@@ -76,8 +87,8 @@ const EmployeePage: React.FC = () => {
           onPageChange={handlePageChange}
         />
       </div>
-      <a 
-        className="text-center text-sky-800 font-bold drop-shadow-lg no-underline mt-3 text-2xl my-5 hover:text-blue-900 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+      <a
+        className="text-center text-sky-800 font-bold drop-shadow-lg no-underline text-2xl mt-12 hover:text-blue-900 hover:scale-110 transition-all duration-300 flex items-center justify-center"
         href="/"
       >
         <FontAwesomeIcon icon={faHome} className="mr-2" />

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Employee {
   firstName: string;
@@ -17,16 +17,16 @@ export interface EmployeeState {
 }
 
 const initialState: EmployeeState = {
-  list: JSON.parse(localStorage.getItem('employees') || '[]'),
+  list: JSON.parse(localStorage.getItem("employees") || "[]"),
 };
 
 const employeeSlice = createSlice({
-  name: 'employees',
+  name: "employees",
   initialState,
   reducers: {
     addEmployee: (state, action: PayloadAction<Employee>) => {
       state.list.push(action.payload);
-      localStorage.setItem('employees', JSON.stringify(state.list));
+      localStorage.setItem("employees", JSON.stringify(state.list));
     },
   },
 });

@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import exportedStoreObject from './redux/store';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import exportedStoreObject from "./redux/store";
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 
 if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);
@@ -21,5 +21,5 @@ if (rootElement) {
     </React.StrictMode>
   );
 } else {
-  console.error('Failed to find the root element');
+  console.error("Failed to find the root element");
 }

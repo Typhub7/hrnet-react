@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface TableInfoProps {
   currentCount: number;
@@ -6,12 +6,13 @@ interface TableInfoProps {
   filtered: boolean;
 }
 
-const TableInfo = ({ currentCount, totalCount, filtered } : TableInfoProps) => {
+const TableInfo = ({ currentCount, totalCount, filtered }: TableInfoProps) => {
   return (
     <div className="table-info">
       {filtered ? (
         <p>
-          Showing {currentCount} to {currentCount} of {currentCount} entries (filtered from {totalCount} total entries)
+          Showing {currentCount} to {currentCount} of {currentCount} entries
+          (filtered from {totalCount} total entries)
         </p>
       ) : (
         <p>
