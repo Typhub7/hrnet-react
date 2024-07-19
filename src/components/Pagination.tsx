@@ -14,7 +14,7 @@ const Pagination = ({
   onPageChange,
 }: PaginationProps) => {
   const totalPages = Math.ceil(filteredCount / entriesPerPage);
-  const maxButtons = 7; // Nombre maximum de boutons (sans compter "Previous" et "Next")
+  const maxButtons = 7;
 
   const handlePreviousPage = () => {
     if (currentPage > 1) onPageChange(currentPage - 1);
@@ -26,36 +26,29 @@ const Pagination = ({
 
   const renderPageNumbers = () => {
     const pages = [];
-    const half = Math.floor(maxButtons / 3);
-    let start = Math.max(2, currentPage - half);
-    let end = Math.min(totalPages - 1, currentPage + half);
+    const half = Math.floor(maxButtons / 2);
 
-    if (currentPage <= half) {
-      end = maxButtons - 1;
-    } else if (currentPage + half >= totalPages) {
-      start = totalPages - maxButtons + 2;
-    }
-
-    if (start > 2) {
-      pages.push(1);
-      pages.push("...");
-    } else {
-      for (let i = 1; i < start; i++) {
+    if (totalPages <= maxButtons) {
+      for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
-    }
-
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-
-    if (end < totalPages - 1) {
-      pages.push("...");
-      pages.push(totalPages);
     } else {
-      for (let i = end + 1; i <= totalPages; i++) {
+      pages.push(1); // Always display the first page
+      if (currentPage > half + 1) {
+        pages.push('...');
+      }
+
+      const start = Math.max(2, currentPage - half + 1);
+      const end = Math.min(totalPages - 1, currentPage + half - 1);
+
+      for (let i = start; i <= end; i++) {
         pages.push(i);
       }
+
+      if (currentPage + half < totalPages - 1) {
+        pages.push('...');
+      }
+      pages.push(totalPages); // Always display the last page
     }
 
     return pages;
@@ -103,3 +96,4 @@ const Pagination = ({
 };
 
 export default Pagination;
+

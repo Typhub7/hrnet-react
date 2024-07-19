@@ -39,7 +39,7 @@ const TestButton: React.FC = () => {
     };
   };
   const handleAddTestEmployees = () => {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
       const fakeEmployee = generateFakeEmployee();
       dispatch(addEmployee(fakeEmployee));
     }
@@ -50,7 +50,7 @@ const TestButton: React.FC = () => {
       className="px-4 py-3 bg-green-500 text-white rounded-md cursor-pointer z-50 hover:bg-green-700"
       onClick={handleAddTestEmployees}
     >
-      Add 100 Test Employees
+      Add 10 Test Employees
     </button>
   );
 };

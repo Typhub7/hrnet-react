@@ -99,7 +99,7 @@ const EmployeeTable = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  });
 
   return (
     <table ref={tableRef} className="w-full border-collapse" {...getTableProps()}>
