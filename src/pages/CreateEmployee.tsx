@@ -132,7 +132,7 @@ const CreateEmployee: React.FC = () => {
   };
 
   return (
-    <div className='w-80'>
+    <div className='w-80 m-12'>
       <nav className='text-center text-sky-800 font-bold drop-shadow-lg no-underline mt-7 text-xl my-5 hover:text-blue-900 hover:scale-110 transition-all duration-300'>
         <Link to="/employees" className='flex items-center justify-center'>
           <FontAwesomeIcon icon={faUsers} className="mr-2" />

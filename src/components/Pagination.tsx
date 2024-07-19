@@ -13,12 +13,52 @@ const Pagination = ({
   entriesPerPage,
   onPageChange,
 }: PaginationProps) => {
+  const totalPages = Math.ceil(filteredCount / entriesPerPage);
+  const maxButtons = 7; // Nombre maximum de boutons (sans compter "Previous" et "Next")
+
   const handlePreviousPage = () => {
-    onPageChange(currentPage - 1);
+    if (currentPage > 1) onPageChange(currentPage - 1);
   };
 
   const handleNextPage = () => {
-    onPageChange(currentPage + 1);
+    if (currentPage < totalPages) onPageChange(currentPage + 1);
+  };
+
+  const renderPageNumbers = () => {
+    const pages = [];
+    const half = Math.floor(maxButtons / 3);
+    let start = Math.max(2, currentPage - half);
+    let end = Math.min(totalPages - 1, currentPage + half);
+
+    if (currentPage <= half) {
+      end = maxButtons - 1;
+    } else if (currentPage + half >= totalPages) {
+      start = totalPages - maxButtons + 2;
+    }
+
+    if (start > 2) {
+      pages.push(1);
+      pages.push("...");
+    } else {
+      for (let i = 1; i < start; i++) {
+        pages.push(i);
+      }
+    }
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    if (end < totalPages - 1) {
+      pages.push("...");
+      pages.push(totalPages);
+    } else {
+      for (let i = end + 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    }
+
+    return pages;
   };
 
   return (
@@ -32,27 +72,29 @@ const Pagination = ({
       >
         Previous
       </button>
-      {[...Array(Math.ceil(filteredCount / entriesPerPage)).keys()].map(
-        (page) => (
+      {renderPageNumbers().map((page, index) =>
+        typeof page === "string" ? (
+          <span key={`ellipsis-${index}`} className="mx-2">
+            {page}
+          </span>
+        ) : (
           <button
-            key={page + 1}
+            key={page}
             className={`page-number mx-2 my-0 ${
-              currentPage === page + 1 ? "font-bold bg-gray-400" : ""
+              currentPage === page ? "font-bold bg-gray-400" : ""
             }`}
-            onClick={() => onPageChange(page + 1)}
+            onClick={() => onPageChange(page)}
           >
-            {page + 1}
+            {page}
           </button>
         )
       )}
       <button
         className={`mr-1 mt-0 ${
-          currentPage === Math.ceil(filteredCount / entriesPerPage)
-            ? "text-gray-400 cursor-not-allowed"
-            : "text-black"
+          currentPage === totalPages ? "text-gray-400 cursor-not-allowed" : "text-black"
         }`}
         onClick={handleNextPage}
-        disabled={currentPage === Math.ceil(filteredCount / entriesPerPage)}
+        disabled={currentPage === totalPages}
       >
         Next
       </button>

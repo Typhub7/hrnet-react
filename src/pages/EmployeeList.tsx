@@ -37,7 +37,7 @@ const EmployeePage: React.FC = () => {
   return (
     <div
       id="employee-div"
-      className="bg-white w-screen max-w-screen-xl flex flex-col items-center"
+      className="bg-white w-screen max-w-screen-xl flex flex-col items-center m-10"
     >
       <h1 className="text-5xl text-sky-800 font-bold drop-shadow-lg">
         Current Employees
@@ -66,7 +66,7 @@ const EmployeePage: React.FC = () => {
         </div>
       </div>
 
-      <div className="table_container mb-5 w-full">
+      <div className="table_container mb-5 w-99p">
         <EmployeeTable
           filterText={filterText}
           updateCounts={updateCounts}

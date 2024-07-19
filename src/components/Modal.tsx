@@ -75,12 +75,6 @@ const CustomModal = ({ isOpen, onRequestClose, content }: CustomModalProps) => {
         onMouseLeave={() => setIsHovered(false)}
       />
       <div className="text-2xl">{content}</div>
-      <button
-        onClick={onRequestClose}
-        className="mt-8 bg-sky-800 hover:bg-sky-600 text-white text-bold text-lg"
-      >
-        Close
-      </button>
     </Modal>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useTable, useSortBy, Column, TableInstance } from "react-table";
 import { RootState } from "../redux/store";
@@ -18,6 +18,7 @@ const EmployeeTable = ({
   currentPage,
 }: EmployeeTableProps) => {
   const employees = useSelector((state: RootState) => state.employees.list);
+  const tableRef = useRef<HTMLTableElement>(null);  // Ajoute un ref pour le tableau
 
   const [sortedColumnId, setSortedColumnId] = useState<string | null>(null);
 
@@ -85,8 +86,23 @@ const EmployeeTable = ({
     }
   };
 
+  // Efface le tri lorsque l'utilisateur clique en dehors du tableau
+  const handleClickOutside = (event: MouseEvent) => {
+    if (tableRef.current && !tableRef.current.contains(event.target as Node)) {
+      setSortBy([]);
+      setSortedColumnId(null);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <table className="w-full border-collapse" {...getTableProps()}>
+    <table ref={tableRef} className="w-full border-collapse" {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr className="" {...headerGroup.getHeaderGroupProps()}>
@@ -105,7 +121,7 @@ const EmployeeTable = ({
                         column.isSorted && !column.isSortedDesc
                           ? "text-black"
                           : "text-gray-300"
-                      } text-base`}
+                      } text-xl`}
                       onClick={() => handleSortAsc(column)}
                     >
                       ▲
@@ -115,7 +131,7 @@ const EmployeeTable = ({
                         column.isSorted && column.isSortedDesc
                           ? "text-black"
                           : "text-gray-300"
-                      } text-base`}
+                      } text-xl`}
                       onClick={() => handleSortDesc(column)}
                     >
                       ▼

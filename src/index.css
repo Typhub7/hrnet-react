@@ -98,7 +98,6 @@ button:hover {
 }
 
 .table_container {
-  width: 100%;
   border-collapse: collapse;
   height: 70vh;
   overflow-y: auto;
