@@ -160,21 +160,25 @@ const CreateEmployee: React.FC = () => {
         {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
         
         <label htmlFor="date-of-birth">Date of Birth</label>
-        <DatePicker
-          selectedDate={dateOfBirth}
-          onChange={(date: Date | null) => {
-            setDateOfBirth(date);
-          }}
-        />
+        <div id="date-of-birth">
+          <DatePicker
+            selectedDate={dateOfBirth}
+            onChange={(date: Date | null) => {
+              setDateOfBirth(date);
+            }}
+          />
+        </div>
         {errors.dateOfBirth && <p className="text-red-500">{errors.dateOfBirth}</p>}
-        
+
         <label htmlFor="start-date">Start Date</label>
-        <DatePicker
-          selectedDate={startDate}
-          onChange={(date: Date | null) => {
-            setStartDate(date);
-          }}
-        />
+        <div id="start-date">
+          <DatePicker
+            selectedDate={startDate}
+            onChange={(date: Date | null) => {
+              setStartDate(date);
+            }}
+          />
+        </div>
         {errors.startDate && <p className="text-red-500">{errors.startDate}</p>}
         
         <fieldset className="address">
