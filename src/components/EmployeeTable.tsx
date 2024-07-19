@@ -18,7 +18,7 @@ const EmployeeTable = ({
   currentPage,
 }: EmployeeTableProps) => {
   const employees = useSelector((state: RootState) => state.employees.list);
-  const tableRef = useRef<HTMLTableElement>(null);  // Ajoute un ref pour le tableau
+  const tableRef = useRef<HTMLTableElement>(null);
 
   const [sortedColumnId, setSortedColumnId] = useState<string | null>(null);
 
@@ -86,7 +86,6 @@ const EmployeeTable = ({
     }
   };
 
-  // Efface le tri lorsque l'utilisateur clique en dehors du tableau
   const handleClickOutside = (event: MouseEvent) => {
     if (tableRef.current && !tableRef.current.contains(event.target as Node)) {
       setSortBy([]);
@@ -104,60 +103,60 @@ const EmployeeTable = ({
   return (
     <table ref={tableRef} className="w-full border-collapse" {...getTableProps()}>
       <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr className="" {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th
-                className={`bg-gray-400 ${
-                  sortedColumnId === column.id ? "bg-slate-400" : ""
-                }`}
-                {...column.getHeaderProps()}
-              >
-                <div className="arrow_container flex items-center cursor-pointer justify-between">
-                  {column.render("Header")}
-                  <div className="sort-arrows flex flex-col ml-1 text-gray-300">
-                    <span
-                      className={`sort-arrow ${
-                        column.isSorted && !column.isSortedDesc
-                          ? "text-black"
-                          : "text-gray-300"
-                      } text-xl`}
-                      onClick={() => handleSortAsc(column)}
-                    >
-                      ▲
-                    </span>
-                    <span
-                      className={`sort-arrow ${
-                        column.isSorted && column.isSortedDesc
-                          ? "text-black"
-                          : "text-gray-300"
-                      } text-xl`}
-                      onClick={() => handleSortDesc(column)}
-                    >
-                      ▼
-                    </span>
-                  </div>
-                </div>
-              </th>
-            ))}
-          </tr>
-        ))}
+        {headerGroups.map((headerGroup) => {
+          const { key, ...restHeaderGroupProps } = headerGroup.getHeaderGroupProps();
+          return (
+            <tr key={key} {...restHeaderGroupProps}>
+              {headerGroup.headers.map((column) => {
+                const { key: columnKey, ...restColumnProps } = column.getHeaderProps();
+                return (
+                  <th
+                    key={columnKey}
+                    className={`bg-gray-400 ${sortedColumnId === column.id ? "bg-slate-400" : ""}`}
+                    {...restColumnProps}
+                  >
+                    <div className="arrow_container flex items-center cursor-pointer justify-between">
+                      {column.render("Header")}
+                      <div className="sort-arrows flex flex-col ml-1 text-gray-300">
+                        <span
+                          className={`sort-arrow ${
+                            column.isSorted && !column.isSortedDesc ? "text-black" : "text-gray-300"
+                          } text-xl`}
+                          onClick={() => handleSortAsc(column)}
+                        >
+                          ▲
+                        </span>
+                        <span
+                          className={`sort-arrow ${
+                            column.isSorted && column.isSortedDesc ? "text-black" : "text-gray-300"
+                          } text-xl`}
+                          onClick={() => handleSortDesc(column)}
+                        >
+                          ▼
+                        </span>
+                      </div>
+                    </div>
+                  </th>
+                );
+              })}
+            </tr>
+          );
+        })}
       </thead>
       <tbody {...getTableBodyProps()}>
         {rows.map((row) => {
           prepareRow(row);
+          const { key, ...restRowProps } = row.getRowProps();
           return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => (
-                <td
-                  className={
-                    sortedColumnId === cell.column.id ? "bg-slate-300" : ""
-                  }
-                  {...cell.getCellProps()}
-                >
-                  {cell.render("Cell")}
-                </td>
-              ))}
+            <tr key={key} {...restRowProps}>
+              {row.cells.map((cell) => {
+                const { key: cellKey, ...restCellProps } = cell.getCellProps();
+                return (
+                  <td key={cellKey} className={sortedColumnId === cell.column.id ? "bg-slate-300" : ""} {...restCellProps}>
+                    {cell.render("Cell")}
+                  </td>
+                );
+              })}
             </tr>
           );
         })}
