@@ -47,7 +47,7 @@ const TestButton: React.FC = () => {
 
   return (
     <button
-      className="px-4 py-3 bg-green-500 text-white rounded-md cursor-pointer z-50 hover:bg-green-700"
+      className="px-4 py-3 bg-white text-black rounded-md cursor-pointer z-50 hover:bg-green-700"
       onClick={handleAddTestEmployees}
     >
       Add 10 Test Employees
