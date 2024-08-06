@@ -20,7 +20,10 @@ const EmployeeTable = ({
   const employees = useSelector((state: RootState) => state.employees.list);
   const tableRef = useRef<HTMLTableElement>(null);
 
-  const [sortedColumnId, setSortedColumnId] = useState<string | null>(null);
+  const [sortedColumn, setSortedColumn] = useState<{
+    id: string;
+    desc: boolean;
+  } | null>(null);
 
   const columns: Column<Employee>[] = useMemo(
     () => [
@@ -55,41 +58,44 @@ const EmployeeTable = ({
     updateCounts(data.length, employees.length);
   }, [data.length, employees.length, updateCounts]);
 
+  const sortedData = useMemo(() => {
+    if (!sortedColumn) return data;
+    return [...data].sort((a, b) => {
+      const aValue = a[sortedColumn.id as keyof Employee];
+      const bValue = b[sortedColumn.id as keyof Employee];
+
+      if (aValue > bValue) return sortedColumn.desc ? -1 : 1;
+      if (aValue < bValue) return sortedColumn.desc ? 1 : -1;
+      return 0;
+    });
+  }, [data, sortedColumn]);
+
   const paginatedData = useMemo(() => {
     const startIndex = (currentPage - 1) * entriesPerPage;
-    return data.slice(startIndex, startIndex + entriesPerPage);
-  }, [data, currentPage, entriesPerPage]);
+    return sortedData.slice(startIndex, startIndex + entriesPerPage);
+  }, [sortedData, currentPage, entriesPerPage]);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    setSortBy,
-  } = useTable(
-    { columns, data: paginatedData },
-    useSortBy
-  ) as TableInstance<Employee>;
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      { columns, data: paginatedData },
+      useSortBy
+    ) as TableInstance<Employee>;
 
-  const handleSortAsc = (column: Column<Employee>) => {
-    if (column.id) {
-      setSortBy([{ id: column.id, desc: false }]);
-      setSortedColumnId(column.id);
-    }
+  const handleSortAsc = (columnId: string) => {
+    setSortedColumn({ id: columnId, desc: false });
   };
 
-  const handleSortDesc = (column: Column<Employee>) => {
-    if (column.id) {
-      setSortBy([{ id: column.id, desc: true }]);
-      setSortedColumnId(column.id);
-    }
+  const handleSortDesc = (columnId: string) => {
+    setSortedColumn({ id: columnId, desc: true });
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (tableRef.current && !tableRef.current.contains(event.target as Node)) {
-      setSortBy([]);
-      setSortedColumnId(null);
+    if (
+      tableRef.current &&
+      !tableRef.current.contains(event.target as Node) &&
+      !(event.target as HTMLElement).closest(".pagination")
+    ) {
+      setSortedColumn(null);
     }
   };
 
@@ -101,18 +107,26 @@ const EmployeeTable = ({
   });
 
   return (
-    <table ref={tableRef} className="w-full border-collapse" {...getTableProps()}>
+    <table
+      ref={tableRef}
+      className="w-full border-collapse"
+      {...getTableProps()}
+    >
       <thead>
         {headerGroups.map((headerGroup) => {
-          const { key, ...restHeaderGroupProps } = headerGroup.getHeaderGroupProps();
+          const { key, ...restHeaderGroupProps } =
+            headerGroup.getHeaderGroupProps();
           return (
             <tr key={key} {...restHeaderGroupProps}>
               {headerGroup.headers.map((column) => {
-                const { key: columnKey, ...restColumnProps } = column.getHeaderProps();
+                const { key: columnKey, ...restColumnProps } =
+                  column.getHeaderProps();
                 return (
                   <th
                     key={columnKey}
-                    className={`bg-gray-400 ${sortedColumnId === column.id ? "bg-slate-400" : ""}`}
+                    className={`bg-gray-400 ${
+                      sortedColumn?.id === column.id ? "bg-slate-400" : ""
+                    }`}
                     {...restColumnProps}
                   >
                     <div className="arrow_container flex items-center cursor-pointer justify-between">
@@ -120,17 +134,21 @@ const EmployeeTable = ({
                       <div className="sort-arrows flex flex-col ml-1 text-gray-300">
                         <span
                           className={`sort-arrow ${
-                            column.isSorted && !column.isSortedDesc ? "text-black" : "text-gray-300"
+                            sortedColumn?.id === column.id && !sortedColumn.desc
+                              ? "text-black"
+                              : "text-gray-300"
                           } text-xl`}
-                          onClick={() => handleSortAsc(column)}
+                          onClick={() => handleSortAsc(column.id)}
                         >
                           ▲
                         </span>
                         <span
                           className={`sort-arrow ${
-                            column.isSorted && column.isSortedDesc ? "text-black" : "text-gray-300"
+                            sortedColumn?.id === column.id && sortedColumn.desc
+                              ? "text-black"
+                              : "text-gray-300"
                           } text-xl`}
-                          onClick={() => handleSortDesc(column)}
+                          onClick={() => handleSortDesc(column.id)}
                         >
                           ▼
                         </span>
@@ -152,7 +170,13 @@ const EmployeeTable = ({
               {row.cells.map((cell) => {
                 const { key: cellKey, ...restCellProps } = cell.getCellProps();
                 return (
-                  <td key={cellKey} className={sortedColumnId === cell.column.id ? "bg-slate-300" : ""} {...restCellProps}>
+                  <td
+                    key={cellKey}
+                    className={
+                      sortedColumn?.id === cell.column.id ? "bg-slate-300" : ""
+                    }
+                    {...restCellProps}
+                  >
                     {cell.render("Cell")}
                   </td>
                 );

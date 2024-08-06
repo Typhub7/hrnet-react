@@ -1,6 +1,11 @@
 import React from "react";
 import exportedStoreObject from "../redux/store";
 
+/**
+ * A test button component that resets the application state.
+ * This will only be visible for development environments.
+ * @returns {JSX.Element} The rendered button component.
+ */
 const ResetButton: React.FC = () => {
   const persistor = exportedStoreObject.persistor;
 

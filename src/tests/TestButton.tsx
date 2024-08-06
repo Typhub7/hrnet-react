@@ -3,6 +3,11 @@ import { useDispatch } from "react-redux";
 import { addEmployee } from "../redux/employeeSlice";
 import { faker } from "@faker-js/faker";
 
+/**
+ * TestButton component that adds 10 test employees to the state when clicked.
+ * This will only be visible for development environments.
+ * @returns {JSX.Element} The rendered button component.
+ */
 const TestButton: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -14,6 +19,12 @@ const TestButton: React.FC = () => {
     "Legal",
   ];
 
+  /**
+   * Format a date object to a string in DD/MM/YYYY format.
+   * In order to have the display look consistent
+   * @param {Date} date - The date to format.
+   * @returns {string} The formatted date string.
+   */
   const formatDate = (date: Date) => {
     return `${date.getDate().toString().padStart(2, "0")}/${(
       date.getMonth() + 1
@@ -22,6 +33,11 @@ const TestButton: React.FC = () => {
       .padStart(2, "0")}/${date.getFullYear()}`;
   };
 
+  /**
+   * Generate a fake employee object with random data.
+   * 
+   * @returns {Object} The generated fake employee.
+   */
   const generateFakeEmployee = () => {
     const dateOfBirth = faker.date.birthdate({ min: 18, max: 65, mode: "age" });
     const startDate = faker.date.recent({ days: 90 });
@@ -38,6 +54,10 @@ const TestButton: React.FC = () => {
       zipCode: faker.location.zipCode(),
     };
   };
+
+  /**
+   * Handle the action to add 10 test employees.
+   */
   const handleAddTestEmployees = () => {
     for (let i = 0; i < 10; i++) {
       const fakeEmployee = generateFakeEmployee();

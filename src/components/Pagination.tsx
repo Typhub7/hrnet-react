@@ -1,5 +1,6 @@
 import React from "react";
 
+// Props interface for Pagination
 interface PaginationProps {
   currentPage: number;
   filteredCount: number;
@@ -7,23 +8,35 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
+/**
+ * Pagination component for navigating through pages of employees.
+ *
+ * @param {number} currentPage - The current page number.
+ * @param {number} filteredCount - The total number of filtered items.
+ * @param {number} entriesPerPage - The number of items per page.
+ * @param {function} onPageChange - Callback function to change the page.
+ */
 const Pagination = ({
   currentPage,
   filteredCount,
   entriesPerPage,
   onPageChange,
 }: PaginationProps) => {
+  // Calculate the total number of pages
   const totalPages = Math.ceil(filteredCount / entriesPerPage);
   const maxButtons = 7;
 
+  // Handle the action when the previous page button is clicked
   const handlePreviousPage = () => {
     if (currentPage > 1) onPageChange(currentPage - 1);
   };
 
+  // Handle the action when the next page button is clicked
   const handleNextPage = () => {
     if (currentPage < totalPages) onPageChange(currentPage + 1);
   };
 
+  // Generate the page numbers to be displayed
   const renderPageNumbers = () => {
     const pages = [];
     const half = Math.floor(maxButtons / 2);
@@ -35,7 +48,7 @@ const Pagination = ({
     } else {
       pages.push(1); // Always display the first page
       if (currentPage > half + 1) {
-        pages.push('...');
+        pages.push("...");
       }
 
       const start = Math.max(2, currentPage - half + 1);
@@ -46,7 +59,7 @@ const Pagination = ({
       }
 
       if (currentPage + half < totalPages - 1) {
-        pages.push('...');
+        pages.push("...");
       }
       pages.push(totalPages); // Always display the last page
     }
@@ -84,7 +97,9 @@ const Pagination = ({
       )}
       <button
         className={`mr-1 mt-0 ${
-          currentPage === totalPages ? "text-gray-400 cursor-not-allowed" : "text-black"
+          currentPage === totalPages
+            ? "text-gray-400 cursor-not-allowed"
+            : "text-black"
         }`}
         onClick={handleNextPage}
         disabled={currentPage === totalPages}
@@ -96,4 +111,3 @@ const Pagination = ({
 };
 
 export default Pagination;
-

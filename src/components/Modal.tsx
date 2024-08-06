@@ -4,7 +4,7 @@ import { CSSProperties } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
-/** Component for rendering a custom modal using react-modal.
+/** Component for rendering the employee added modal using react-modal.
  * @param {CustomModalProps} props - Props for CustomModal component.
  * @returns {JSX.Element} JSX representation of the CustomModal component.
  */

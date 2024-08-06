@@ -6,6 +6,14 @@ interface TableInfoProps {
   filtered: boolean;
 }
 
+/**
+ * TableInfo component that displays information about the table entries.
+ * 
+ * @param {number} currentCount - The current number of entries displayed.
+ * @param {number} totalCount - The total number of entries available.
+ * @param {boolean} filtered - Indicates if the data is filtered.
+ * @returns {JSX.Element} The rendered table information component.
+ */
 const TableInfo = ({ currentCount, totalCount, filtered }: TableInfoProps) => {
   return (
     <div className="table-info">
