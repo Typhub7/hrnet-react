@@ -31,19 +31,6 @@ select {
   margin-bottom: 10px;
 }
 
-fieldset {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-  margin-top: 10px;
-  width: 92%;
-}
-
-legend {
-  padding: 0 10px;
-  font-weight: bold;
-}
-
 /* Button Styles */
 button {
   background-color: #ccc;
@@ -57,15 +44,10 @@ button {
   text-decoration: none;
 }
 
-h1 {
-  cursor: default
-}
-
 button:hover {
   background-color: #606060;
   color: #ffffff;
 }
-
 
 /* Modal Styles */
 .modal {
@@ -85,18 +67,7 @@ button:hover {
   display: block;
 }
 
-/* Employee List Styles */
-#employee-div {
-  padding: 20px;
-  margin-top: 0px;
-  height: 77.5vh;
-}
-
-#employee-div h1 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
+/* Table Styles */
 .table_container {
   border-collapse: collapse;
   height: 70vh;
@@ -115,17 +86,11 @@ button:hover {
   font-weight: bold;
 }
 
-
 th,
 td {
   border: 1px solid black;
   padding: 8px;
   text-align: left;
-}
-
-a {
-  display: block;
-  margin-top: 20px;
 }
 
 tbody tr:nth-child(odd) {

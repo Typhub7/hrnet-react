@@ -2,7 +2,7 @@ import React, { useMemo, useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useTable, useSortBy, Column, TableInstance } from "react-table";
 import { RootState } from "../redux/store";
-import { Employee } from "../pages/CreateEmployee";
+import { Employee } from "../interfaces/employee";
 
 interface EmployeeTableProps {
   filterText: string;

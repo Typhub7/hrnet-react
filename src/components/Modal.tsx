@@ -9,6 +9,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
  * @returns {JSX.Element} JSX representation of the CustomModal component.
  */
 
+// Set the app element to ensure accessibility
 Modal.setAppElement("#root");
 
 interface CustomModalProps {

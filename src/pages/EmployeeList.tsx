@@ -39,9 +39,9 @@ const EmployeePage: React.FC = () => {
     <div className="bg-white border-1 border-solid border-gray-500 rounded-lg shadow-lg">
       <div
         id="employee-div"
-        className="bg-white w-screen max-w-screen-xl flex flex-col items-center m-10 "
+        className="bg-white w-screen max-w-screen-xl flex flex-col items-center m-10 p-5 mt-0 h-[77.5vh]"
       >
-        <h1 className="text-5xl text-sky-800 font-bold drop-shadow-lg">
+        <h1 className="text-5xl text-sky-800 font-bold drop-shadow-lg mb-5 cursor-default">
           Current Employees
           <span className="absolute left-1 -bottom-2.5 w-72 h-1.5 bg-gradient-to-r from-sky-900 via-sky-600 to-slate-400 drop-shadow-lg"></span>
         </h1>
