@@ -39,7 +39,7 @@ const EmployeePage = () => {
     <div className="bg-white border-1 border-solid border-gray-500 rounded-lg shadow-lg">
       <div
         id="employee-div"
-        className="bg-white w-screen max-w-screen-xl flex flex-col items-center m-10 p-5 mt-0 h-[77.5vh]"
+        className="bg-white w-screen max-w-screen-xl flex flex-col items-center m-10 p-5 mt-0 h-[87vh]"
       >
         <h1 className="text-5xl text-sky-800 font-bold drop-shadow-lg mb-5 cursor-default">
           Current Employees
