@@ -7,7 +7,7 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../components/Pagination";
 import TestButtons from "../tests/TestButtons";
 
-const EmployeePage: React.FC = () => {
+const EmployeePage = () => {
   const [filterText, setFilterText] = useState("");
   const [filteredCount, setFilteredCount] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
@@ -43,7 +43,7 @@ const EmployeePage: React.FC = () => {
       >
         <h1 className="text-5xl text-sky-800 font-bold drop-shadow-lg mb-5 cursor-default">
           Current Employees
-          <span className="absolute left-1 -bottom-2.5 w-72 h-1.5 bg-gradient-to-r from-sky-900 via-sky-600 to-slate-400 drop-shadow-lg"></span>
+          <span className="absolute left-1 -bottom-2.5 w-full h-1.5 bg-gradient-to-r from-sky-900 via-sky-600 to-slate-400 drop-shadow-lg"></span>
         </h1>
         <div className="flex justify-between items-center mb-5 w-full">
           <div className="flex items-center">

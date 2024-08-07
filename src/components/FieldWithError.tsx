@@ -17,7 +17,12 @@ interface FieldWithErrorProps {
  * @param {string} [props.error] - The error message to display, if any.
  * @return {JSX.Element} The rendered field with error message.
  */
-const FieldWithError: React.FC<FieldWithErrorProps> = ({ label, value, onChange, error }) => {
+const FieldWithError = ({
+  label,
+  value,
+  onChange,
+  error,
+}: FieldWithErrorProps) => {
   return (
     <div className="mb-4">
       <label htmlFor={label.toLowerCase().replace(" ", "-")}>{label}</label>
@@ -26,7 +31,9 @@ const FieldWithError: React.FC<FieldWithErrorProps> = ({ label, value, onChange,
         id={label.toLowerCase().replace(" ", "-")}
         value={value}
         onChange={onChange}
-        className={`border-2 border-gray-300 p-2 rounded-md ${error ? "border-red-500" : ""}`}
+        className={`border-2 border-gray-300 p-2 rounded-md ${
+          error ? "border-red-500" : ""
+        }`}
       />
       {error && <p className="text-red-500">{error}</p>}
     </div>

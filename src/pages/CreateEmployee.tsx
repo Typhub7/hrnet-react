@@ -9,7 +9,7 @@ import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import EmployeeForm from "../components/EmployeeForm";
 import { Employee } from "../interfaces/employee";
 
-const CreateEmployee: React.FC = () => {
+const CreateEmployee = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentEmployee, setCurrentEmployee] = useState<Employee | null>(null);
   const dispatch = useDispatch();

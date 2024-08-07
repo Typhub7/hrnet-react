@@ -19,7 +19,13 @@ interface AddressFieldsProps {
  * @param {object} errors - An object containing any error messages for the address fields.
  * @return {JSX.Element} The rendered address fields.
  */
-const AddressFields: React.FC<AddressFieldsProps> = ({ street, city, zipCode, onChange, errors }) => {
+const AddressFields = ({
+  street,
+  city,
+  zipCode,
+  onChange,
+  errors,
+}: AddressFieldsProps) => {
   return (
     <>
       <label htmlFor="street">Street</label>
@@ -28,7 +34,9 @@ const AddressFields: React.FC<AddressFieldsProps> = ({ street, city, zipCode, on
         id="street"
         value={street}
         onChange={(e) => onChange("street", e.target.value)}
-        className={`border-2 border-gray-300 p-2 rounded-md ${errors.street ? "border-red-500" : ""}`}
+        className={`border-2 border-gray-300 p-2 rounded-md ${
+          errors.street ? "border-red-500" : ""
+        }`}
       />
       {errors.street && <p className="text-red-500">{errors.street}</p>}
 
@@ -38,7 +46,9 @@ const AddressFields: React.FC<AddressFieldsProps> = ({ street, city, zipCode, on
         id="city"
         value={city}
         onChange={(e) => onChange("city", e.target.value)}
-        className={`border-2 border-gray-300 p-2 rounded-md ${errors.city ? "border-red-500" : ""}`}
+        className={`border-2 border-gray-300 p-2 rounded-md ${
+          errors.city ? "border-red-500" : ""
+        }`}
       />
       {errors.city && <p className="text-red-500">{errors.city}</p>}
 
@@ -48,7 +58,9 @@ const AddressFields: React.FC<AddressFieldsProps> = ({ street, city, zipCode, on
         id="zip-code"
         value={zipCode}
         onChange={(e) => onChange("zipCode", e.target.value)}
-        className={`border-2 border-gray-300 p-2 rounded-md ${errors.zipCode ? "border-red-500" : ""}`}
+        className={`border-2 border-gray-300 p-2 rounded-md ${
+          errors.zipCode ? "border-red-500" : ""
+        }`}
       />
       {errors.zipCode && <p className="text-red-500">{errors.zipCode}</p>}
     </>

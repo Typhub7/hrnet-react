@@ -22,7 +22,7 @@ interface EmployeeFormProps {
   onSave: (employee: Employee) => void;
 }
 
-const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSave }) => {
+const EmployeeForm = ({ onSave }: EmployeeFormProps) => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
@@ -38,7 +38,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSave }) => {
 
   /**
    * Validate form fields and set error messages.
-   * 
+   *
    * @returns {boolean} True if all fields are valid, false otherwise.
    */
   const validateFields = () => {
@@ -131,7 +131,9 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSave }) => {
           onChange={(date: Date | null) => setDateOfBirth(date)}
         />
       </div>
-      {errors.dateOfBirth && <p className="text-red-500">{errors.dateOfBirth}</p>}
+      {errors.dateOfBirth && (
+        <p className="text-red-500">{errors.dateOfBirth}</p>
+      )}
       <label htmlFor="start-date">Start Date</label>
       <div id="start-date">
         <DatePicker
@@ -151,12 +153,16 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSave }) => {
         />
         <StateDropdown
           selectedState={selectedStates.name}
-          onSelectedChange={(selected) => setSelectedStates({ name: selected, abbreviation: selected })}
+          onSelectedChange={(selected) =>
+            setSelectedStates({ name: selected, abbreviation: selected })
+          }
         />
       </fieldset>
       <DepartmentDropdown
         selectedDepartment={selectedDepartment.value}
-        onSelectedChange={(selected) => setSelectedDepartment({ value: selected, label: selected })}
+        onSelectedChange={(selected) =>
+          setSelectedDepartment({ value: selected, label: selected })
+        }
       />
       <button
         type="button"

@@ -13,7 +13,10 @@ interface DepartmentDropdownProps {
  * @param {DepartmentDropdownProps} props - The props object containing the selected department and the onSelectedChange function.
  * @return {JSX.Element} The rendered DepartmentDropdown component.
  */
-const DepartmentDropdown: React.FC<DepartmentDropdownProps> = ({ selectedDepartment, onSelectedChange }) => {
+const DepartmentDropdown = ({
+  selectedDepartment,
+  onSelectedChange,
+}: DepartmentDropdownProps) => {
   return (
     <div className="dropdown_container">
       <label htmlFor="department">Department</label>

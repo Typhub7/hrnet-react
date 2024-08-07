@@ -12,7 +12,10 @@ interface StateDropdownProps {
  * @param {StateDropdownProps} props - The props object containing the selected state and the onSelectedChange function.
  * @return {JSX.Element} The rendered StateDropdown component.
  */
-const StateDropdown: React.FC<StateDropdownProps> = ({ selectedState, onSelectedChange }) => {
+const StateDropdown = ({
+  selectedState,
+  onSelectedChange,
+}: StateDropdownProps) => {
   return (
     <div className="dropdown_container">
       <label htmlFor="state">State</label>

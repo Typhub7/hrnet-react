@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header: React.FC = () => (
+const Header= () => (
   <header className="text-center w-full flex flex-col justify-center items-center">
     <h1 className="text-6xl mt-4 pt-5 text-sky-800 font-bold drop-shadow-lg cursor-default">
       HRnet
