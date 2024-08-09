@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Dropdown } from "react-dropdown-package";
 import { options as departmentOptions } from "../data/department";
 
@@ -7,23 +7,34 @@ interface DepartmentDropdownProps {
   onSelectedChange: (selected: string) => void;
 }
 
-/**
- * Renders a dropdown component for selecting a department.
- *
- * @param {DepartmentDropdownProps} props - The props object containing the selected department and the onSelectedChange function.
- * @return {JSX.Element} The rendered DepartmentDropdown component.
- */
 const DepartmentDropdown = ({
   selectedDepartment,
   onSelectedChange,
 }: DepartmentDropdownProps) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (isDropdownOpen && dropdownRef.current) {
+      dropdownRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [isDropdownOpen]);
+
   return (
-    <div className="dropdown_container">
+    <div className="dropdown_container" ref={dropdownRef}>
       <label htmlFor="department">Department</label>
       <Dropdown
         options={departmentOptions}
         selected={selectedDepartment}
-        onSelectedChange={onSelectedChange}
+        onSelectedChange={(selected) => {
+          onSelectedChange(selected);
+          setIsDropdownOpen(false); 
+        }}
+        onOpen={() => setIsDropdownOpen(true)} 
+        onClose={() => setIsDropdownOpen(false)} 
         customClasses={{
           list: "bg-white",
         }}

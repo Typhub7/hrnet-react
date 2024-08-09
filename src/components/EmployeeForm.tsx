@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import DatePicker from "../components/DatePicker";
-
 import { options as departmentOptions, Option } from "../data/department";
 import { states, OptionState } from "../data/states";
 import {
@@ -12,7 +11,7 @@ import {
   validateCity,
   validateZipCode,
 } from "../validation/validation";
-import FieldWithError from "./FieldWithError";
+import FieldWithError from "./FieldWithDisplayError";
 import AddressFields from "./AddressFields";
 import DepartmentDropdown from "./DepartmentDropdown";
 import StateDropdown from "./StateDropdown";

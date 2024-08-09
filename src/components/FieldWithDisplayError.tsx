@@ -23,12 +23,14 @@ const FieldWithError = ({
   onChange,
   error,
 }: FieldWithErrorProps) => {
+  const fieldId = label.toLowerCase().replace(" ", "-");
+
   return (
     <div className="mb-4">
-      <label htmlFor={label.toLowerCase().replace(" ", "-")}>{label}</label>
+      <label htmlFor={fieldId}>{label}</label>
       <input
         type="text"
-        id={label.toLowerCase().replace(" ", "-")}
+        id={fieldId}
         value={value}
         onChange={onChange}
         className={`border-2 border-gray-300 p-2 rounded-md ${

@@ -1,16 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface Employee {
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  startDate: string;
-  department: string;
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-}
+import { Employee } from "../interfaces/employee";
 
 export interface EmployeeState {
   list: Employee[];

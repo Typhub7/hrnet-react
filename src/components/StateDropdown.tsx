@@ -1,23 +1,30 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Dropdown } from "react-dropdown-package";
 import { states } from "../data/states";
+
 interface StateDropdownProps {
   selectedState: string;
   onSelectedChange: (selected: string) => void;
 }
 
-/**
- * Renders a dropdown component for selecting a state.
- *
- * @param {StateDropdownProps} props - The props object containing the selected state and the onSelectedChange function.
- * @return {JSX.Element} The rendered StateDropdown component.
- */
 const StateDropdown = ({
   selectedState,
   onSelectedChange,
 }: StateDropdownProps) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (isDropdownOpen && dropdownRef.current) {
+      dropdownRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [isDropdownOpen]);
+
   return (
-    <div className="dropdown_container">
+    <div className="dropdown_container" ref={dropdownRef}>
       <label htmlFor="state">State</label>
       <Dropdown
         options={states.map((state) => ({
@@ -25,7 +32,12 @@ const StateDropdown = ({
           label: state.name,
         }))}
         selected={selectedState}
-        onSelectedChange={onSelectedChange}
+        onSelectedChange={(selected) => {
+          onSelectedChange(selected);
+          setIsDropdownOpen(false); 
+        }}
+        onOpen={() => setIsDropdownOpen(true)} 
+        onClose={() => setIsDropdownOpen(false)} 
         customClasses={{
           list: "bg-white",
         }}
