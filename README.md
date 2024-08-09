@@ -24,9 +24,9 @@ Ce site a été conçu pour permettre la saisie des employées dans un tableau e
 
 ## Technologies 
 
-- <img src="https://github.com/Typhub7/SportSee/blob/main/public/logo-react.png" width="24"/> React
-- <img src="https://github.com/Typhub7/SportSee/blob/main/public/logo-typescrit.png" width="24"/> TypeScript
-- <img src="https://github.com/Typhub7/SportSee/blob/main/public/logo-tailwind.png" width="48" height="24" /> Tailwind
+- <img src="https://github.com/Typhub7/SportSee/blob/main/public/logo-react.png" width="24" style="vertical-align: middle;"/> React
+- <img src="https://github.com/Typhub7/SportSee/blob/main/public/logo-typescrit.png" width="24" style="vertical-align: middle;"/> TypeScript
+- <img src="https://github.com/Typhub7/SportSee/blob/main/public/logo-tailwind.png" width="92" height="20" style="vertical-align: middle;"/> Tailwind
 
 ## Installation
 
