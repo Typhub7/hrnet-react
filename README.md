@@ -22,11 +22,11 @@ Ce site a été conçu pour permettre la saisie des employées dans un tableau e
 - Page de création d'employé : nom, prénom, date de naissance, date d'embauche, adresse complète et nom du service.
 - Page de visualisation du personnel : Un tableau, permettant le tri, la recherche et/ou l'affichage selectif.
 
-# Technologies 
+## Technologies 
 
 - <img src="https://github.com/Typhub7/SportSee/blob/main/public/logo-react.png" width="24"/> React
 - <img src="https://github.com/Typhub7/SportSee/blob/main/public/logo-typescrit.png" width="24"/> TypeScript
-- <img src="https://github.com/Typhub7/SportSee/blob/main/public/logo-tailwind.png" width="36" height="12" /> Tailwind
+- <img src="https://github.com/Typhub7/SportSee/blob/main/public/logo-tailwind.png" width="48" height="24" /> Tailwind
 
 ## Installation
 
