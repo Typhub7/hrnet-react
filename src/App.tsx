@@ -1,9 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import CreateEmployee from "./pages/CreateEmployee";
 import EmployeeList from "./pages/EmployeeList";
 
-const App: React.FC = () => (
+const App = () => (
   <Router>
     <Routes>
       <Route path="/" element={<CreateEmployee />} />
