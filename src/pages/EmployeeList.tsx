@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../components/Pagination";
 import TestButtons from "../tests/TestButtons";
+import { Link } from 'react-router-dom';
 
 const EmployeePage = () => {
   const [filterText, setFilterText] = useState("");
@@ -89,13 +90,13 @@ const EmployeePage = () => {
             onPageChange={handlePageChange}
           />
         </div>
-        <a
+        <Link
+          to="/"
           className="text-center text-sky-800 font-bold drop-shadow-lg no-underline text-2xl mt-12 hover:text-blue-900 hover:scale-110 transition-all duration-300 flex items-center justify-center"
-          href="/"
         >
           <FontAwesomeIcon icon={faHome} className="mr-2" />
           Home
-        </a>
+        </Link>
       </div>
       <TestButtons />
     </div>
