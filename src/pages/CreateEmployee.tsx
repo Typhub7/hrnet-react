@@ -6,7 +6,7 @@ import DatePicker from "../components/DatePicker";
 import { addEmployee } from "../redux/employeeSlice";
 import { Dropdown } from "react-dropdown-package";
 import { options as departmentOptions, Option } from "../data/department";
-import { states, OptionState } from "../data/states";
+import { states } from "../data/states";
 import CustomModal from "../components/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +28,11 @@ import {
  */
 
 const CreateEmployee = () => {
+  const options = states.map((state) => ({
+    value: state.name,
+    label: state.name,
+  }));
+
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
@@ -35,10 +40,8 @@ const CreateEmployee = () => {
   const [street, setStreet] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [zipCode, setZipCode] = useState<string>("");
-  const [selectedDepartment, setSelectedDepartment] = useState<Option>(
-    departmentOptions[0]
-  );
-  const [selectedStates, setSelectedStates] = useState<OptionState>(states[0]);
+  const [selectedDepartment, setSelectedDepartment] = useState<Option>(departmentOptions[0]);
+  const [selectedStates, setSelectedStates] = useState(options[0].value);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -113,7 +116,7 @@ const CreateEmployee = () => {
       department: selectedDepartment ? selectedDepartment.value : "",
       street,
       city,
-      state: selectedStates.name,
+      state: selectedStates,
       zipCode,
     };
     dispatch(addEmployee(employee));
@@ -121,17 +124,15 @@ const CreateEmployee = () => {
     setIsModalOpen(true);
   };
 
+
+
   const handleSelectedDepartmentChange = (selected: string) => {
     const selectedOption: Option = { value: selected, label: selected };
     setSelectedDepartment(selectedOption);
   };
 
-  const handleSelectedStateChange = (selected: string) => {
-    const selectedOption: OptionState = {
-      name: selected,
-      abbreviation: selected,
-    };
-    setSelectedStates(selectedOption);
+  const handleSelectedStateChange = (selectedValue: string) => {
+    setSelectedStates(selectedValue);
   };
 
   // Add a Scroll to the dropdown when it is open
@@ -149,11 +150,7 @@ const CreateEmployee = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  /**
-   * Handles the form submission by preventing default behavior, validating fields, and saving the employee.
-   *
-   * @param {React.FormEvent<HTMLFormElement>} event - The form submission event.
-   */
+  // Handles the form submission by preventing default behavior, validating fields, and saving the employee.
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     saveEmployee();
@@ -246,11 +243,8 @@ const CreateEmployee = () => {
             <label htmlFor="state">State</label>
             <div className="dropdown_container" onClick={handleDropdownToggle}>
               <Dropdown
-                options={states.map((state) => ({
-                  value: state.abbreviation,
-                  label: state.name,
-                }))}
-                selected={selectedStates.name}
+                options={options} 
+                selected={selectedStates} 
                 onSelectedChange={handleSelectedStateChange}
                 customClasses={{
                   list: "bg-white",
