@@ -124,8 +124,6 @@ const CreateEmployee = () => {
     setIsModalOpen(true);
   };
 
-
-
   const handleSelectedDepartmentChange = (selected: string) => {
     const selectedOption: Option = { value: selected, label: selected };
     setSelectedDepartment(selectedOption);
